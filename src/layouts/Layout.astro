@@ -1,0 +1,157 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { 
+	title = "EmbryoOne — Connect Intelligence to the Real World",
+	description = "Bring AI, hardware, IoT and software together in one intelligent platform built for the real world."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- SEO Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#CB6CE6" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		
+		<!-- DM Sans Google Font (400, 500, 600, 700) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		/* Typography */
+		--font-primary: 'DM Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+		/* Ambient Aurora Mesh Glow Palette Tokens (EmbryoOne Style Guide) */
+		--glow-color-1: #CB6CE6; /* Primary Embryo Purple */
+		--glow-color-2: #5B3AC4; /* Secondary Iris Accent */
+		--glow-color-3: #C453E4; /* Vivid Orchid Shade */
+		--glow-color-4: #F3E0FB; /* Soft Lavender Blush */
+		--glow-color-5: #3B2166; /* Twilight Ink */
+		--glow-base: #FFFFFF;
+
+		/* Brand — sourced from EmbryoOne logo */
+		--color-brand: #CB6CE6; /* Embryo Purple — primary */
+		--color-brand-hover: #AD52D0; /* Lavender Purple */
+		--color-brand-active: #A35AC8; /* Lavender Purple 2 */
+		--color-amethyst: #9A4DC1; /* logo wordmark / links */
+		--color-orchid: #C759E1; /* Vivid Orchid — secondary */
+		--color-violet: #DB97F5; /* soft highlight / chips */
+
+		/* Ink & accent */
+		--color-ink: #181330;
+		--color-ink-deep: #120C1F;
+		--color-twilight: #3B2166;
+		--color-iris: #5B3AC4; /* blue replacement */
+
+		/* Neutral — Lovable-inspired warm surfaces */
+		--color-white: #FFFFFF;
+		--color-parchment: #F7F4ED;
+		--color-linen: #FAF8F5; /* Warm off-white for editorial sections */
+		--color-parchment-border: #ECEAE4;
+		--color-lavender: #F3E6FB;
+		--color-mist: #E4DFEA;
+		--color-dove: #5C5566;
+		--color-steel: #888494;
+
+		/* Functional — ZERO BLUE RULE */
+		--color-danger: #E54840;
+		--color-success: #2F9E68;
+		--color-warning: #E2A63D;
+		--color-info: #5B3AC4; /* = Iris, never blue */
+
+		/* Radius */
+		--radius-sm: 8px;
+		--radius-md: 12px;
+		--radius-lg: 16px;
+		--radius-xl: 20px;
+		--radius-2xl: 24px;
+		--radius-pill: 999px;
+
+		/* Shadow */
+		--shadow-sm: 0 1px 2px rgba(18, 12, 31, 0.05);
+		--shadow-md: 0 4px 16px rgba(18, 12, 31, 0.06);
+		--shadow-lg: 0 16px 48px rgba(18, 12, 31, 0.14);
+		--shadow-glow: 0 0 24px rgba(203, 108, 230, 0.18);
+	}
+
+	*, *::before, *::after {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		font-family: var(--font-primary);
+		background-color: var(--color-parchment);
+		color: var(--color-ink);
+		font-size: 16px;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+		scroll-behavior: smooth;
+		overflow-x: hidden;
+	}
+
+	body {
+		min-height: 100vh;
+		background-color: var(--color-parchment);
+		color: var(--color-ink);
+		line-height: 1.5;
+		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Focus state styling conforming to zero blue rule */
+	:focus-visible {
+		outline: 2px solid var(--color-brand);
+		outline-offset: 2px;
+	}
+
+	/* Typography utility defaults */
+	h1, h2, h3, h4, h5, h6 {
+		color: var(--color-ink);
+		font-weight: 700;
+		line-height: 1.1;
+		letter-spacing: -0.02em;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	button, input, select, textarea {
+		font-family: inherit;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		*, *::before, *::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+		}
+	}
+</style>

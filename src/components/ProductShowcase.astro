@@ -1,0 +1,842 @@
+---
+---
+
+<div class="product-showcase-wrapper" id="product-showcase">
+  <div class="product-container">
+    <!-- Top Application Window Frame / Bar -->
+    <div class="app-topbar">
+      <div class="window-controls">
+        <span class="control-dot close"></span>
+        <span class="control-dot minimize"></span>
+        <span class="control-dot expand"></span>
+      </div>
+
+      <div class="app-title-area">
+        <div class="logo-mark-small">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+            <circle cx="12" cy="12" r="10" fill="#CB6CE6" />
+            <circle cx="9" cy="9" r="3" fill="#F3E6FB" />
+            <circle cx="15" cy="9" r="2.5" fill="#DB97F5" />
+            <circle cx="9" cy="15" r="2.5" fill="#E4DFEA" />
+            <circle cx="15" cy="15" r="3" fill="#F3E6FB" />
+          </svg>
+        </div>
+        <span class="app-name">EmbryoOne Command Console</span>
+        <span class="env-badge">Production Edge Mesh</span>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="status-indicator">
+          <span class="status-ping"></span>
+          <span class="status-text">1,428 Nodes Online</span>
+        </div>
+        <button class="btn-quick-deploy" aria-label="Deploy AI Edge Model">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
+          </svg>
+          Deploy Model
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Shell (Sidebar + Content Canvas) -->
+    <div class="app-shell">
+      <!-- Dark Ink Violet Navigation Sidebar -->
+      <aside class="app-sidebar" aria-label="Dashboard Navigation">
+        <div class="sidebar-section">
+          <span class="section-heading">OPERATIONS</span>
+          <button class="nav-item active" data-tab="overview">
+            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Overview</span>
+          </button>
+          <button class="nav-item" data-tab="iot">
+            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 2v20M2 12h20M17 7l-10 10M7 7l10 10"/></svg>
+            <span>IoT Stream</span>
+            <span class="badge-count">1.4k</span>
+          </button>
+          <button class="nav-item" data-tab="ai">
+            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8z"/><path d="M12 6v6l4 2"/></svg>
+            <span>AI Edge Models</span>
+            <span class="badge-status-dot"></span>
+          </button>
+          <button class="nav-item" data-tab="hardware">
+            <svg viewBox="0 0 24 24" class="nav-icon"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            <span>Hardware Nodes</span>
+          </button>
+        </div>
+
+        <div class="sidebar-section">
+          <span class="section-heading">MANAGEMENT</span>
+          <button class="nav-item" data-tab="automations">
+            <svg viewBox="0 0 24 24" class="nav-icon"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Automations</span>
+          </button>
+          <button class="nav-item" data-tab="analytics">
+            <svg viewBox="0 0 24 24" class="nav-icon"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+
+            <span>Analytics</span>
+          </button>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="user-pill">
+            <div class="avatar">EO</div>
+            <div class="user-info">
+              <span class="user-name">Engineering Ops</span>
+              <span class="user-role">Enterprise Plan</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Dashboard Workspace Surface -->
+      <main class="app-workspace">
+        <!-- Top Metrics Cards Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">CONNECTED HARDWARE</span>
+              <span class="metric-icon purple">
+                <svg viewBox="0 0 24 24" width="16" height="16"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+              </span>
+            </div>
+            <div class="metric-value">1,428 <span class="metric-unit">devices</span></div>
+            <div class="metric-footer success">
+              <svg viewBox="0 0 24 24" width="12" height="12"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+              <span>99.94% online operational uptime</span>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">EDGE AI INFERENCE LATENCY</span>
+              <span class="metric-icon iris">
+                <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </span>
+            </div>
+            <div class="metric-value">4.2 <span class="metric-unit">ms avg</span></div>
+            <div class="metric-footer success">
+              <svg viewBox="0 0 24 24" width="12" height="12"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+              <span>-1.8ms vs baseline model</span>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">IOT DATA INGESTION</span>
+              <span class="metric-icon amethyst">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </span>
+            </div>
+            <div class="metric-value">84.2k <span class="metric-unit">ops/sec</span></div>
+            <div class="metric-footer iris">
+              <svg viewBox="0 0 24 24" width="12" height="12"><path d="M12 2v20M2 12h20"/></svg>
+              <span>Real-time zero-copy streaming</span>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">ACTIVE AUTOMATIONS</span>
+              <span class="metric-icon violet">
+                <svg viewBox="0 0 24 24" width="16" height="16"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </span>
+            </div>
+            <div class="metric-value">168 <span class="metric-unit">rules</span></div>
+            <div class="metric-footer success">
+              <span>0 unhandled fault triggers</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Panel Section: Telemetry Graph & Operational Intelligence Feed -->
+        <div class="dashboard-split-view">
+          <!-- Left Main Column: Live IoT Telemetry & AI Stream -->
+          <div class="panel-card chart-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h3>Real-Time IoT Signal Stream</h3>
+                <p>Edge inference telemetry across industrial sensor clusters</p>
+              </div>
+              <div class="panel-controls">
+                <button class="pill-btn active">Live (1s)</button>
+                <button class="pill-btn">1H</button>
+                <button class="pill-btn">24H</button>
+              </div>
+            </div>
+
+            <div class="chart-container">
+              <svg viewBox="0 0 600 180" class="telemetry-chart" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#CB6CE6" stop-opacity="0.3" />
+                    <stop offset="100%" stop-color="#CB6CE6" stop-opacity="0.0" />
+                  </linearGradient>
+                  <linearGradient id="chartGradSecondary" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#5B3AC4" stop-opacity="0.2" />
+                    <stop offset="100%" stop-color="#5B3AC4" stop-opacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Grid lines -->
+                <line x1="0" y1="30" x2="600" y2="30" stroke="#ECEAE4" stroke-dasharray="4 4" />
+                <line x1="0" y1="80" x2="600" y2="80" stroke="#ECEAE4" stroke-dasharray="4 4" />
+                <line x1="0" y1="130" x2="600" y2="130" stroke="#ECEAE4" stroke-dasharray="4 4" />
+
+                <!-- Secondary Curve (Iris #5B3AC4) -->
+                <path d="M 0 140 Q 100 110, 200 130 T 400 90 T 600 110 L 600 180 L 0 180 Z" fill="url(#chartGradSecondary)" />
+                <path d="M 0 140 Q 100 110, 200 130 T 400 90 T 600 110" fill="none" stroke="#5B3AC4" stroke-width="1.5" stroke-dasharray="3 3" />
+
+                <!-- Main Telemetry Wave Curve (Embryo Purple #CB6CE6) -->
+                <path d="M 0 110 Q 75 40, 150 70 T 300 35 T 450 65 T 600 25 L 600 180 L 0 180 Z" fill="url(#chartGrad)" />
+                <path d="M 0 110 Q 75 40, 150 70 T 300 35 T 450 65 T 600 25" fill="none" stroke="#CB6CE6" stroke-width="2.5" />
+
+                <!-- Pulsing live data point -->
+                <circle cx="600" cy="25" r="5" fill="#CB6CE6" />
+                <circle cx="600" cy="25" r="10" fill="#CB6CE6" opacity="0.3" class="chart-ping" />
+              </svg>
+            </div>
+
+            <!-- Legend & Sensor Cluster Bar -->
+            <div class="chart-footer-bar">
+              <div class="legend-item">
+                <span class="legend-dot purple"></span>
+                <span>AI Anomaly Threshold Vector</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot iris"></span>
+                <span>Raw Edge Telemetry (Cluster 04)</span>
+              </div>
+              <div class="throughput-indicator">
+                <span>Ingestion Rate: <strong>84,210 msg/s</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: AI Operational Event Stream -->
+          <div class="panel-card events-panel">
+            <div class="panel-header">
+              <h3>AI Operational Intelligence</h3>
+              <span class="live-pill">Live Feed</span>
+            </div>
+
+            <div class="event-list">
+              <div class="event-item">
+                <div class="event-icon success">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="event-details">
+                  <div class="event-title">Autonomous Calibration Executed</div>
+                  <div class="event-meta">Sensor Node #8401 • 12s ago</div>
+                </div>
+                <span class="event-tag success">Resolved</span>
+              </div>
+
+              <div class="event-item">
+                <div class="event-icon brand">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div class="event-details">
+                  <div class="event-title">Edge AI Model v3.2 Deployed</div>
+                  <div class="event-meta">420 Hardware Nodes updated • 2m ago</div>
+                </div>
+                <span class="event-tag brand">Active</span>
+              </div>
+
+              <div class="event-item">
+                <div class="event-icon iris">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                </div>
+                <div class="event-details">
+                  <div class="event-title">New Edge Gateway Discovered</div>
+                  <div class="event-meta">MAC: 4A:88:E2:01 • 5m ago</div>
+                </div>
+                <span class="event-tag iris">Info</span>
+              </div>
+
+              <div class="event-item">
+                <div class="event-icon warning">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div class="event-details">
+                  <div class="event-title">Thermal Spike Compensated</div>
+                  <div class="event-meta">HVAC Gateway #04 • 14m ago</div>
+                </div>
+                <span class="event-tag warning">Mitigated</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple tab switching logic for product showcase interactivity
+  document.addEventListener('DOMContentLoaded', () => {
+    const navItems = document.querySelectorAll('.app-sidebar .nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+  });
+</script>
+
+<style>
+  .product-showcase-wrapper {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 16px;
+    position: relative;
+    z-index: 20;
+    animation: showcaseEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .product-container {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-parchment-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  /* App Window Bar */
+  .app-topbar {
+    height: 44px;
+    background-color: #FAF8F5;
+    border-bottom: 1px solid var(--color-parchment-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+
+  .window-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .control-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #E4DFEA;
+  }
+  .control-dot.close { background-color: #E54840; opacity: 0.8; }
+  .control-dot.minimize { background-color: #E2A63D; opacity: 0.8; }
+  .control-dot.expand { background-color: #2F9E68; opacity: 0.8; }
+
+  .app-title-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .app-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .env-badge {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-amethyst);
+    background-color: var(--color-lavender);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-mist);
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-dove);
+  }
+
+  .status-ping {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-success);
+    box-shadow: 0 0 8px rgba(47, 158, 104, 0.4);
+  }
+
+  .btn-quick-deploy {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-white);
+    background-color: var(--color-brand);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  .btn-quick-deploy:hover {
+    background-color: var(--color-brand-hover);
+  }
+
+  /* App Shell */
+  .app-shell {
+    display: flex;
+    min-height: 480px;
+  }
+
+  /* Dark Ink Violet Sidebar */
+  .app-sidebar {
+    width: 230px;
+    background-color: var(--color-ink-deep);
+    color: #A098B0;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    border-right: 1px solid #1E1730;
+  }
+
+  .sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .section-heading {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #6C6380;
+    padding: 0 10px;
+    margin-bottom: 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    color: #B5ACC8;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+    width: 100%;
+  }
+
+  .nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-white);
+  }
+
+  .nav-item.active {
+    background-color: rgba(203, 108, 230, 0.15);
+    color: var(--color-brand);
+    font-weight: 700;
+  }
+
+  .nav-icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .badge-count {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    background-color: #271E3D;
+    color: var(--color-violet);
+    padding: 1px 6px;
+    border-radius: var(--radius-pill);
+  }
+
+  .badge-status-dot {
+    margin-left: auto;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-brand);
+  }
+
+  .sidebar-footer {
+    padding-top: 16px;
+    border-top: 1px solid #1E1730;
+  }
+
+  .user-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-twilight);
+    color: var(--color-brand);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-amethyst);
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .user-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  .user-role {
+    font-size: 10px;
+    color: #7D7494;
+  }
+
+  /* App Workspace */
+  .app-workspace {
+    flex: 1;
+    background-color: #FAF8F5;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .metric-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-parchment-border);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .metric-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .metric-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color-steel);
+    letter-spacing: 0.04em;
+  }
+
+  .metric-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .metric-icon.purple { background-color: var(--color-lavender); stroke: var(--color-brand); fill: none; }
+  .metric-icon.iris { background-color: #EEECFB; stroke: var(--color-iris); fill: none; }
+  .metric-icon.amethyst { background-color: #F6EAFB; stroke: var(--color-amethyst); fill: none; }
+  .metric-icon.violet { background-color: #FAF0FE; stroke: var(--color-orchid); fill: none; }
+
+  .metric-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 8px 0 4px 0;
+    letter-spacing: -0.02em;
+  }
+
+  .metric-unit {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-dove);
+  }
+
+  .metric-footer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .metric-footer.success { color: var(--color-success); fill: currentColor; }
+  .metric-footer.iris { color: var(--color-iris); }
+
+  /* Dashboard Split View */
+  .dashboard-split-view {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    flex: 1;
+  }
+
+  .panel-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-parchment-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .panel-title-group h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .panel-title-group p {
+    font-size: 11px;
+    color: var(--color-steel);
+  }
+
+  .panel-controls {
+    display: flex;
+    gap: 4px;
+    background-color: #FAF8F5;
+    padding: 2px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-parchment-border);
+  }
+
+  .pill-btn {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-dove);
+    background: transparent;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .pill-btn.active {
+    background-color: var(--color-white);
+    color: var(--color-ink);
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Telemetry Chart */
+  .chart-container {
+    width: 100%;
+    height: 140px;
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .telemetry-chart {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .chart-ping {
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes ping {
+    75%, 100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  .chart-footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--color-dove);
+    border-top: 1px solid var(--color-parchment-border);
+    padding-top: 10px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .legend-dot.purple { background-color: var(--color-brand); }
+  .legend-dot.iris { background-color: var(--color-iris); }
+
+  /* Event Stream Panel */
+  .live-pill {
+    font-size: 10px;
+    font-weight: 700;
+    background-color: var(--color-lavender);
+    color: var(--color-brand);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+  }
+
+  .event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+  }
+
+  .event-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    background-color: #FAF8F5;
+    border: 1px solid var(--color-parchment-border);
+  }
+
+  .event-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .event-icon.success { background-color: #EAF6F0; color: var(--color-success); }
+  .event-icon.brand { background-color: var(--color-lavender); color: var(--color-brand); }
+  .event-icon.iris { background-color: #EEECFB; color: var(--color-iris); }
+  .event-icon.warning { background-color: #FEF7EA; color: var(--color-warning); }
+
+  .event-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .event-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .event-meta {
+    font-size: 10px;
+    color: var(--color-steel);
+  }
+
+  .event-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .event-tag.success { background-color: #EAF6F0; color: var(--color-success); }
+  .event-tag.brand { background-color: var(--color-lavender); color: var(--color-brand); }
+  .event-tag.iris { background-color: #EEECFB; color: var(--color-iris); }
+  .event-tag.warning { background-color: #FEF7EA; color: var(--color-warning); }
+
+  @keyframes showcaseEntrance {
+    0% {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1023px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .dashboard-split-view {
+      grid-template-columns: 1fr;
+    }
+    .app-sidebar {
+      width: 60px;
+      padding: 12px 6px;
+    }
+    .app-sidebar .section-heading,
+    .app-sidebar .nav-item span,
+    .app-sidebar .sidebar-footer .user-info {
+      display: none;
+    }
+    .nav-item {
+      justify-content: center;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .app-sidebar {
+      display: none;
+    }
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+    .app-topbar .topbar-actions .status-text {
+      display: none;
+    }
+    .app-workspace {
+      padding: 12px;
+    }
+  }
+</style>

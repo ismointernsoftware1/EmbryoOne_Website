@@ -1,0 +1,382 @@
+---
+import FloatingTile from './FloatingTile.astro';
+import HeroNetwork from './HeroNetwork.astro';
+import ProductShowcase from './ProductShowcase.astro';
+
+// SVG Icon definitions for EmbryoOne Domain Tiles
+const iconAI = `<svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>`;
+const iconHardware = `<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>`;
+const iconIoT = `<svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M17 7l-10 10M7 7l10 10"/><circle cx="12" cy="12" r="4"/></svg>`;
+const iconAutomation = `<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+const iconAnalytics = `<svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><polyline points="4 8 10 4 16 9 22 3"/></svg>`;
+const iconConnected = `<svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>`;
+---
+
+<section class="hero-section" aria-label="Hero Section">
+  <!-- Layer 2: Ultra-subtle background hairline grid -->
+  <div class="hero-background-grid" aria-hidden="true"></div>
+
+  <!-- Hero Main Relative Composition Container (Height 420px) -->
+  <div class="hero-container">
+    <!-- Layer 3: SVG Connection Lines Network (z-index: 5) -->
+    <HeroNetwork />
+
+    <!-- Layer 4: Floating Integration Tiles (Pulled further back to edges: z-index: 15) -->
+    <div class="floating-tiles-layer" aria-hidden="true">
+      <!-- 1. AI Intelligence (Top Left) -->
+      <FloatingTile
+        icon={iconAI}
+        label="AI Intelligence"
+        sublabel="Real-time reasoning"
+        top="40px"
+        left="2%"
+        rotate="-5deg"
+        duration="8.0s"
+        delay="0s"
+      />
+
+      <!-- 2. Hardware (Mid Left — Pulled far back to 3% left to prevent text overlap) -->
+      <FloatingTile
+        icon={iconHardware}
+        label="Hardware"
+        sublabel="Physical systems"
+        top="190px"
+        left="3%"
+        rotate="-2deg"
+        duration="8.4s"
+        delay="-1.8s"
+      />
+
+      <!-- 3. IoT (Lower Left — Pulled far back to 2% left) -->
+      <FloatingTile
+        icon={iconIoT}
+        label="IoT"
+        sublabel="Connected devices"
+        top="340px"
+        left="2%"
+        rotate="-4deg"
+        duration="7.9s"
+        delay="-3.5s"
+      />
+
+      <!-- 4. Automation (Top Right) -->
+      <FloatingTile
+        icon={iconAutomation}
+        label="Automation"
+        sublabel="Automated workflows"
+        top="40px"
+        right="2%"
+        rotate="5deg"
+        duration="8.2s"
+        delay="-0.8s"
+      />
+
+      <!-- 5. Analytics (Mid Right — Pulled far back to 3% right to prevent text overlap) -->
+      <FloatingTile
+        icon={iconAnalytics}
+        label="Analytics"
+        sublabel="Operational intelligence"
+        top="190px"
+        right="3%"
+        rotate="2deg"
+        duration="8.6s"
+        delay="-2.6s"
+      />
+
+      <!-- 6. Connected Devices (Lower Right — Pulled far back to 2% right) -->
+      <FloatingTile
+        icon={iconConnected}
+        label="Connected Devices"
+        sublabel="Live device state"
+        top="340px"
+        right="2%"
+        rotate="4deg"
+        duration="8.0s"
+        delay="-4.2s"
+      />
+    </div>
+
+    <!-- Layer 5–8: Centered Hero Marketing Content (z-index: 20) -->
+    <div class="hero-content">
+      <!-- Badge -->
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Next-Gen Real-World AI Platform</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="hero-headline">
+        Connect intelligence to the<br />
+        <span class="purple-gradient-text">real world</span>
+      </h1>
+
+      <!-- Supporting Paragraph -->
+      <p class="hero-supporting-copy">
+        Bring AI, hardware, IoT and software together in one intelligent platform built for the real world.
+      </p>
+
+      <!-- CTA Group -->
+      <div class="hero-cta-group">
+        <a href="#get-started" class="cta-primary">
+          Get started
+          <svg viewBox="0 0 24 24" class="cta-arrow" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </a>
+        <a href="#demo" class="cta-secondary">
+          Book a demo
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layer 9: Product Showcase Console Wrapper (Positioned cleanly below hero container) -->
+  <div class="hero-showcase-wrapper">
+    <ProductShowcase />
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-parchment);
+    padding-top: 36px;
+    padding-bottom: 64px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* Ultra-subtle background grid (Layer 2) */
+  .hero-background-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(to right, var(--color-parchment-border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-parchment-border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 20;
+    max-width: 1360px;
+    width: 100%;
+    height: 420px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* Floating Tiles Absolute Layer (Layer 4, z-index: 15) */
+  .floating-tiles-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 15;
+  }
+
+  /* Hero Content Area (Layer 5-8, z-index: 20) */
+  .hero-content {
+    max-width: 720px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 20;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-parchment-border);
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 2px 8px rgba(18, 12, 31, 0.04);
+    margin-bottom: 16px;
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--color-brand);
+    box-shadow: 0 0 8px var(--color-brand);
+  }
+
+  .badge-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+  }
+
+  .hero-headline {
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--color-ink);
+    margin-bottom: 16px;
+    max-width: 720px;
+  }
+
+  .purple-gradient-text {
+    background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-amethyst) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-supporting-copy {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--color-dove);
+    max-width: 680px;
+    margin-bottom: 24px;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 46px;
+    padding: 0 24px;
+    background-color: var(--color-brand);
+    color: var(--color-white);
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 10px;
+    box-shadow: var(--shadow-md);
+    transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .cta-primary:hover {
+    background-color: var(--color-brand-hover);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+
+  .cta-primary:active {
+    background-color: var(--color-brand-active);
+    transform: translateY(1px);
+  }
+
+  .cta-arrow {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.15s ease;
+  }
+
+  .cta-primary:hover .cta-arrow {
+    transform: translateX(3px);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+    padding: 0 22px;
+    background-color: var(--color-lavender);
+    color: var(--color-twilight);
+    border: 1px solid var(--color-mist);
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .cta-secondary:hover {
+    background-color: var(--color-mist);
+    border-color: #D3C9DC;
+  }
+
+  /* Product Showcase Console Wrapper */
+  .hero-showcase-wrapper {
+    width: 100%;
+    max-width: 1280px;
+    margin: 16px auto 0 auto;
+    position: relative;
+    z-index: 20;
+  }
+
+  /* Responsive Media Queries */
+  @media (max-width: 1279px) {
+    .floating-tiles-layer {
+      opacity: 0.85;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .hero-section {
+      padding-top: 28px;
+      padding-bottom: 48px;
+    }
+    .hero-container {
+      height: 380px;
+      padding: 0 16px;
+    }
+    .hero-headline {
+      font-size: 46px;
+      letter-spacing: -1.5px;
+    }
+    .hero-supporting-copy {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .hero-section {
+      padding-top: 20px;
+      padding-bottom: 32px;
+    }
+    .hero-container {
+      height: auto;
+      padding: 0 16px;
+    }
+    .hero-headline {
+      font-size: 34px;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+    .hero-supporting-copy {
+      font-size: 15px;
+      line-height: 22px;
+    }
+    .floating-tiles-layer {
+      display: none;
+    }
+    .hero-cta-group {
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+    }
+    .cta-primary, .cta-secondary {
+      width: 100%;
+    }
+  }
+</style>

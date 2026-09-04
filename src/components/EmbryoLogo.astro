@@ -1,0 +1,31 @@
+---
+interface Props {
+  height?: number;
+  class?: string;
+}
+
+const { height = 28, class: className = "" } = Astro.props;
+---
+
+<div class={`embryo-logo-wrapper ${className}`} style={`height: ${height}px;`}>
+  <img 
+    src="/embryoone-logo-transparent.png" 
+    alt="EmbryoOne Logo" 
+    style={`height: ${height}px; width: auto; max-height: ${height}px; object-fit: contain; display: block;`} 
+  />
+</div>
+
+<style>
+  .embryo-logo-wrapper {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .embryo-logo-wrapper img {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: none;
+  }
+</style>

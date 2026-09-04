@@ -1,0 +1,444 @@
+---
+import ScrollReveal from './ScrollReveal.jsx';
+---
+
+<section class="enterprise-showcase">
+  <div class="showcase-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-glow-top-right"></div>
+    <div class="bg-glow-bottom-right"></div>
+    <div class="bg-pattern"></div>
+    <svg class="bg-lines" viewBox="0 0 1000 600" preserveAspectRatio="none">
+      <path d="M 600,0 C 700,300 400,400 1000,500" class="connector-line" />
+      <path d="M 800,0 C 900,200 600,400 1000,400" class="connector-line" />
+      <path d="M 500,600 C 600,300 800,200 1000,100" class="connector-line" />
+    </svg>
+  </div>
+
+  <div class="showcase-container">
+    <div class="showcase-content">
+      <!-- EmbryoOne Brand Logo positioned in empty space -->
+      <div class="showcase-logo-container">
+        <img src="/embryoone-logo-transparent.png" alt="EmbryoOne Logo" class="showcase-logo-img" />
+      </div>
+
+      <ScrollReveal
+        client:visible
+        baseOpacity={0.1}
+        enableBlur={true}
+        baseRotation={2}
+        blurStrength={8}
+        containerClassName="headline-reveal"
+        textClassName="headline-text"
+      >
+        EmbryoOne’s Platform is configurable across any use case and deeply integrated into the world's physical data ecosystems.
+      </ScrollReveal>
+      
+      <p class="body-text">
+        With Flow Builder, our intuitive low-code design tool, and Flow AI, our in-platform assistant, your teams can create net-new automations in minutes.
+      </p>
+
+      <div class="action-buttons">
+        <a href="#action" class="btn-primary">See Flow Builder in action</a>
+        <a href="#hub" class="btn-secondary">Learn about Connector Hub</a>
+      </div>
+    </div>
+
+    <div class="showcase-visual">
+      
+      <!-- Top Right: Template Library -->
+      <div class="floating-panel template-library">
+        <div class="panel-header">TEMPLATE LIBRARY</div>
+        <div class="template-list">
+          <div class="template-item">
+            <span class="icon">▤</span>
+            <span>Predictive Maintenance</span>
+            <span class="action">➔</span>
+          </div>
+          <div class="template-item">
+            <span class="icon">◱</span>
+            <span>Safety Protocol Enforcer</span>
+            <span class="action">➔</span>
+          </div>
+          <div class="template-item">
+            <span class="icon">✛</span>
+            <span>Telemetry Ingestion</span>
+            <span class="action">➔</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Node -->
+      <div class="floating-capsule center-node">
+        <span class="node-label">Build</span>
+        <div class="node-logo">
+           <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none">
+             <path d="M12 2L2 22h20L12 2z" />
+             <circle cx="12" cy="14" r="3" fill="currentColor" />
+           </svg>
+        </div>
+        <span class="node-label">Connect</span>
+      </div>
+
+      <!-- Bottom: Connector Hub -->
+      <div class="floating-card connector-hub">
+        <div class="panel-header">CONNECTOR HUB</div>
+        <div class="connector-grid">
+          <div class="connector-item">OPC UA</div>
+          <div class="connector-item">Modbus</div>
+          <div class="connector-item">MQTT</div>
+          <div class="connector-item">Kafka</div>
+          <div class="connector-item">AWS IoT</div>
+          <div class="connector-item">Azure</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .enterprise-showcase {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 80px auto;
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: var(--color-ink-deep);
+    color: #ffffff;
+    box-shadow: 0 24px 64px rgba(4, 8, 38, 0.4);
+    font-family: var(--font-primary);
+  }
+
+  .showcase-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-ink-deep) 0%, var(--color-ink) 100%);
+  }
+
+  .bg-glow-top-right {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(91, 58, 196, 0.4) 0%, rgba(4, 8, 38, 0) 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+  }
+
+  .bg-glow-bottom-right {
+    position: absolute;
+    bottom: -20%;
+    right: 10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(203, 108, 230, 0.3) 0%, rgba(4, 8, 38, 0) 70%);
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+
+  .bg-pattern {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    mask-image: radial-gradient(ellipse at top right, black 40%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at top right, black 40%, transparent 70%);
+  }
+
+  .bg-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+  }
+
+  .connector-line {
+    fill: none;
+    stroke: #5B3AC4;
+    stroke-width: 1.5;
+    stroke-dasharray: 4 4;
+  }
+
+  .showcase-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 60px;
+    gap: 60px;
+  }
+
+  @media (min-width: 1024px) {
+    .showcase-container {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .showcase-content {
+    flex: 1;
+    max-width: 600px;
+  }
+
+  .showcase-logo-container {
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .showcase-logo-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(203, 108, 230, 0.25);
+  }
+
+  .showcase-logo-img {
+    height: 46px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    filter: brightness(1.3) drop-shadow(0 0 18px rgba(203, 108, 230, 0.4));
+  }
+
+  /* Target the ScrollReveal component specifically */
+  :global(.headline-reveal) {
+    margin: 0 0 24px 0 !important;
+  }
+
+  :global(.headline-text) {
+    font-size: clamp(2rem, 3.5vw, 3rem) !important;
+    line-height: 1.2 !important;
+    font-weight: 500 !important;
+    color: #E4DFEA !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  /* Make some words stand out slightly if needed */
+  :global(.headline-text .word:nth-child(n+9):nth-child(-n+11)) {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+  }
+
+  .body-text {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 40px;
+    max-width: 540px;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--color-brand);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(203, 108, 230, 0.3);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-brand-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(203, 108, 230, 0.4);
+  }
+
+  .btn-secondary {
+    background-color: #ffffff;
+    color: #040826;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-secondary:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .showcase-visual {
+    flex: 1;
+    position: relative;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 40px;
+  }
+
+  .panel-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  /* Glassmorphism base for floating elements */
+  .floating-panel, .floating-capsule, .floating-card {
+    background: rgba(15, 20, 60, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .template-library {
+    padding: 20px;
+    width: 100%;
+    max-width: 340px;
+    animation-delay: 0s;
+  }
+
+  .template-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .template-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #e4dfea;
+    transition: background 0.2s ease;
+    cursor: pointer;
+  }
+
+  .template-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .template-item .icon {
+    color: #CB6CE6;
+  }
+
+  .template-item .action {
+    margin-left: auto;
+    opacity: 0.5;
+  }
+
+  .center-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 16px 32px;
+    border-radius: 40px;
+    align-self: center;
+    margin-right: 10%;
+    background: linear-gradient(145deg, rgba(20, 25, 75, 0.8), rgba(10, 15, 50, 0.8));
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1), 0 16px 32px rgba(0, 0, 0, 0.3);
+    animation-delay: -2s;
+  }
+
+  .node-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .node-logo {
+    color: #4db8ff; /* bright cyan glow */
+    filter: drop-shadow(0 0 12px rgba(77, 184, 255, 0.6));
+  }
+
+  .connector-hub {
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+    align-self: flex-start;
+    animation-delay: -4s;
+  }
+
+  .connector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .connector-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ffffff;
+    transition: all 0.2s ease;
+  }
+
+  .connector-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 1023px) {
+    .showcase-container {
+      padding: 40px 24px;
+    }
+    .showcase-visual {
+      align-items: center;
+      width: 100%;
+    }
+    .center-node {
+      margin-right: 0;
+    }
+    .connector-hub {
+      align-self: center;
+    }
+  }
+</style>
