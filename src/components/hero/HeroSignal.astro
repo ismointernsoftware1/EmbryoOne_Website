@@ -1,0 +1,15 @@
+---
+import type { NetworkPathData } from '../../types/hero';
+
+interface Props {
+  path: NetworkPathData;
+}
+
+const { path } = Astro.props;
+---
+
+<linearGradient id={path.signalGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+  <stop offset="0%" stop-color={path.stopColor1} stop-opacity="0" />
+  <stop offset="70%" stop-color={path.stopColor1} stop-opacity="0.9" />
+  <stop offset="100%" stop-color={path.stopColor2} stop-opacity="1" />
+</linearGradient>

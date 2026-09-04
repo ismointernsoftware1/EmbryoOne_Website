@@ -1,0 +1,299 @@
+---
+import FloatingTile from '../ui/FloatingTile.astro';
+import HeroNetwork from './HeroNetwork.astro';
+import ProductShowcase from '../product/ProductShowcase.astro';
+import Button from '../ui/Button.astro';
+import Badge from '../ui/Badge.astro';
+import { 
+  heroData as defaultHeroData, 
+  heroTiles as defaultHeroTiles, 
+  heroNetworkPaths as defaultNetworkPaths 
+} from '../../data/hero';
+import type { HeroProps } from '../../types/hero';
+
+interface Props extends HeroProps {}
+
+const {
+  eyebrowBadge = defaultHeroData.eyebrowBadge,
+  title = defaultHeroData.title,
+  highlightedTitle = defaultHeroData.highlightedTitle,
+  description = defaultHeroData.description,
+  primaryCta = defaultHeroData.primaryCta,
+  secondaryCta = defaultHeroData.secondaryCta,
+  tiles = defaultHeroTiles,
+  networkPaths = defaultNetworkPaths,
+  showNetwork = true,
+  showConvergence = true,
+  showProductShowcase = true,
+  class: className = ""
+} = Astro.props;
+---
+
+<section class={`hero-section ${className}`} aria-label="Hero Section">
+  <!-- Layer 2: Ultra-subtle background hairline grid -->
+  <div class="hero-background-grid" aria-hidden="true"></div>
+
+  <!-- Hero Main Relative Composition Container (Height 420px) -->
+  <div class="hero-container">
+    
+    <!-- Layer 3: SVG Connection Lines Network (z-index: 5) -->
+    {showNetwork && (
+      <HeroNetwork 
+        paths={networkPaths} 
+        showConvergence={showConvergence} 
+      />
+    )}
+
+    <!-- Layer 4: Floating Integration Tiles (Data-driven, z-index: 15) -->
+    {tiles && tiles.length > 0 && (
+      <div class="floating-tiles-layer" aria-hidden="true">
+        {tiles.map((tile) => (
+          <FloatingTile {...tile} />
+        ))}
+      </div>
+    )}
+
+    <!-- Layer 5–8: Centered Hero Marketing Content (z-index: 20) -->
+    <div class="hero-content">
+      <!-- Badge -->
+      {eyebrowBadge && (
+        <div class="hero-badge-wrapper">
+          <Badge 
+            text={eyebrowBadge.text} 
+            hasDot={eyebrowBadge.hasDot !== false} 
+          />
+        </div>
+      )}
+
+      <!-- Main Headline -->
+      <h1 class="hero-headline">
+        {title}
+        {highlightedTitle && (
+          <>
+            <br />
+            <span class="purple-gradient-text">{highlightedTitle}</span>
+          </>
+        )}
+      </h1>
+
+      <!-- Supporting Paragraph -->
+      {description && (
+        <p class="hero-supporting-copy">{description}</p>
+      )}
+
+      <!-- CTA Group using Reusable Button UI -->
+      {(primaryCta || secondaryCta) && (
+        <div class="hero-cta-group">
+          {primaryCta && (
+            <Button 
+              href={primaryCta.href} 
+              variant="primary" 
+              size="md" 
+              hasArrow={primaryCta.hasArrow !== false}
+              class="hero-primary-btn"
+            >
+              {primaryCta.label}
+            </Button>
+          )}
+
+          {secondaryCta && (
+            <Button 
+              href={secondaryCta.href} 
+              variant="secondary" 
+              size="md"
+              class="hero-secondary-btn"
+            >
+              {secondaryCta.label}
+            </Button>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- Layer 9: Product Showcase Console Wrapper (Positioned cleanly below hero container) -->
+  {showProductShowcase && (
+    <div class="hero-showcase-wrapper" id="products">
+      <ProductShowcase />
+    </div>
+  )}
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-parchment, #F7F4ED);
+    padding-top: 36px;
+    padding-bottom: 64px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* Ultra-subtle background grid (Layer 2) */
+  .hero-background-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(to right, var(--color-parchment-border, #ECEAE4) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-parchment-border, #ECEAE4) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 20;
+    max-width: 1360px;
+    width: 100%;
+    height: 420px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* Floating Tiles Absolute Layer (Layer 4, z-index: 15) */
+  .floating-tiles-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 15;
+  }
+
+  /* Hero Content Area (Layer 5-8, z-index: 20) */
+  .hero-content {
+    max-width: 720px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 20;
+    margin: 0 auto;
+  }
+
+  .hero-badge-wrapper {
+    margin-bottom: 16px;
+  }
+
+  .hero-headline {
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--color-ink, #181330);
+    margin-bottom: 16px;
+    max-width: 720px;
+  }
+
+  .purple-gradient-text {
+    background: linear-gradient(135deg, var(--color-brand, #CB6CE6) 0%, var(--color-amethyst, #9A4DC1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-supporting-copy {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--color-dove, #5C5566);
+    max-width: 680px;
+    margin-bottom: 24px;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .hero-primary-btn {
+    height: 46px;
+    padding: 0 24px;
+    font-size: 15px;
+  }
+
+  .hero-secondary-btn {
+    height: 46px;
+    padding: 0 22px;
+    font-size: 15px;
+  }
+
+  /* Product Showcase Console Wrapper */
+  .hero-showcase-wrapper {
+    width: 100%;
+    max-width: 1280px;
+    margin: 16px auto 0 auto;
+    position: relative;
+    z-index: 20;
+  }
+
+  /* Responsive Media Queries */
+  @media (max-width: 1279px) {
+    .floating-tiles-layer {
+      opacity: 0.85;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .hero-section {
+      padding-top: 28px;
+      padding-bottom: 48px;
+    }
+    .hero-container {
+      height: 380px;
+      padding: 0 16px;
+    }
+    .hero-headline {
+      font-size: 46px;
+      letter-spacing: -1.5px;
+    }
+    .hero-supporting-copy {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .hero-section {
+      padding-top: 20px;
+      padding-bottom: 32px;
+    }
+    .hero-container {
+      height: auto;
+      padding: 0 16px;
+    }
+    .hero-headline {
+      font-size: 34px;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+    .hero-supporting-copy {
+      font-size: 15px;
+      line-height: 22px;
+    }
+    .floating-tiles-layer {
+      display: none;
+    }
+    .hero-cta-group {
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+    }
+    .hero-primary-btn, 
+    .hero-secondary-btn {
+      width: 100%;
+    }
+  }
+</style>

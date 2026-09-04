@@ -1,8 +1,12 @@
 ---
+import FloatingTile from './ui/FloatingTile.astro';
+import type { TilePosition } from '../types/hero';
+
 interface Props {
   icon: string;
   label: string;
   sublabel?: string;
+  position?: TilePosition;
   top?: string;
   left?: string;
   right?: string;
@@ -12,178 +16,8 @@ interface Props {
   duration?: string;
   delay?: string;
   id?: string;
+  class?: string;
 }
-
-const {
-  icon,
-  label,
-  sublabel,
-  top,
-  left,
-  right,
-  bottom,
-  rotate = "0deg",
-  scale = "1.0",
-  duration = "8.0s",
-  delay = "0s",
-  id
-} = Astro.props;
-
-const styleRules = [
-  top ? `top: ${top};` : '',
-  left ? `left: ${left};` : '',
-  right ? `right: ${right};` : '',
-  bottom ? `bottom: ${bottom};` : '',
-  `--float-duration: ${duration};`,
-  `--float-delay: ${delay};`,
-  `--tile-rotate: ${rotate};`,
-  `--tile-scale: ${scale};`
-].filter(Boolean).join(' ');
 ---
 
-<div 
-  id={id}
-  class="floating-tile-wrapper"
-  style={styleRules}
->
-  <div class="floating-tile">
-    <div class="tile-icon-box">
-      <Fragment set:html={icon} />
-    </div>
-    <div class="tile-content">
-      <span class="tile-label">{label}</span>
-      {sublabel && <span class="tile-sublabel">{sublabel}</span>}
-    </div>
-  </div>
-</div>
-
-<style>
-  .floating-tile-wrapper {
-    position: absolute;
-    z-index: 5;
-    transform: rotate(var(--tile-rotate)) scale(var(--tile-scale));
-    animation: gentleDrift var(--float-duration) cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
-    animation-delay: var(--float-delay);
-    will-change: transform;
-    pointer-events: auto;
-  }
-
-  .floating-tile {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    width: 172px;
-    height: 62px;
-    background: #FFFFFF;
-    border: 1px solid rgba(24, 19, 48, 0.08);
-    border-radius: 16px;
-    padding: 10px 14px;
-    box-shadow: 0 8px 24px rgba(18, 12, 31, 0.10);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    user-select: none;
-    box-sizing: border-box;
-  }
-
-  /* Strictly prohibit any pseudo-element card stacking */
-  .floating-tile::before,
-  .floating-tile::after,
-  .floating-tile-wrapper::before,
-  .floating-tile-wrapper::after {
-    content: none !important;
-    display: none !important;
-  }
-
-  .floating-tile:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(18, 12, 31, 0.14);
-    border-color: rgba(203, 108, 230, 0.4);
-  }
-
-  .tile-icon-box {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    background-color: var(--color-lavender);
-    color: var(--color-brand);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .tile-icon-box :global(svg) {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-  }
-
-  .tile-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    line-height: 1.2;
-    overflow: hidden;
-  }
-
-  .tile-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-ink);
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  .tile-sublabel {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--color-steel);
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  @keyframes gentleDrift {
-    0% {
-      transform: rotate(var(--tile-rotate)) scale(var(--tile-scale)) translateY(0px);
-    }
-    100% {
-      transform: rotate(var(--tile-rotate)) scale(var(--tile-scale)) translateY(-6px);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .floating-tile-wrapper {
-      animation: none !important;
-    }
-  }
-
-  @media (max-width: 1023px) {
-    .floating-tile {
-      width: 145px;
-      height: 54px;
-      padding: 8px 10px;
-      gap: 8px;
-      border-radius: 12px;
-    }
-    .tile-icon-box {
-      width: 28px;
-      height: 28px;
-    }
-    .tile-icon-box :global(svg) {
-      width: 15px;
-      height: 15px;
-    }
-    .tile-label {
-      font-size: 12px;
-    }
-    .tile-sublabel {
-      font-size: 10px;
-    }
-  }
-</style>
+<FloatingTile {...Astro.props} />

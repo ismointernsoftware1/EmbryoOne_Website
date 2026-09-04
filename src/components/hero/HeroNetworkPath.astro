@@ -1,0 +1,35 @@
+---
+import type { NetworkPathData } from '../../types/hero';
+
+interface Props {
+  path: NetworkPathData;
+  animated?: boolean;
+}
+
+const {
+  path,
+  animated = true
+} = Astro.props;
+---
+
+<!-- Layer 1: Static Base Path -->
+<path 
+  d={path.d} 
+  stroke="var(--color-parchment-border, #ECEAE4)" 
+  stroke-width="1.25" 
+  opacity="0.35" 
+  class="base-path" 
+/>
+
+<!-- Layer 2: Glowing Animated Light Beam -->
+{animated && (
+  <path 
+    d={path.d} 
+    stroke={`url(#${path.signalGradientId})`} 
+    stroke-width="2.5" 
+    stroke-linecap="round"
+    pathLength="1000"
+    class={`beam-path ${path.id}`}
+    style={`animation-duration: ${path.duration}; animation-delay: ${path.delay};`}
+  />
+)}

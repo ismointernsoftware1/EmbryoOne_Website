@@ -1,0 +1,51 @@
+---
+interface Props {
+  text: string;
+  hasDot?: boolean;
+  variant?: "brand" | "neutral" | "subtle";
+  class?: string;
+}
+
+const {
+  text,
+  hasDot = true,
+  variant = "brand",
+  class: className = ""
+} = Astro.props;
+---
+
+<div class={`eo-badge badge-${variant} ${className}`}>
+  {hasDot && <span class="badge-dot" aria-hidden="true"></span>}
+  <span class="badge-text">{text}</span>
+</div>
+
+<style>
+  .eo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-parchment-border, #ECEAE4);
+    padding: 5px 14px;
+    border-radius: var(--radius-pill, 999px);
+    box-shadow: 0 2px 8px rgba(18, 12, 31, 0.04);
+    box-sizing: border-box;
+    user-select: none;
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--color-brand, #CB6CE6);
+    box-shadow: 0 0 8px var(--color-brand, #CB6CE6);
+    flex-shrink: 0;
+  }
+
+  .badge-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink, #181330);
+    letter-spacing: -0.01em;
+  }
+</style>

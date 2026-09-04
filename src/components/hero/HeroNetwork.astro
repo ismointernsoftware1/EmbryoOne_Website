@@ -1,0 +1,119 @@
+---
+import HeroSignal from './HeroSignal.astro';
+import HeroNetworkPath from './HeroNetworkPath.astro';
+import HeroConvergence from './HeroConvergence.astro';
+import { heroNetworkPaths as defaultPaths } from '../../data/hero';
+import type { NetworkPathData } from '../../types/hero';
+
+interface Props {
+  paths?: NetworkPathData[];
+  showConvergence?: boolean;
+  animated?: boolean;
+  class?: string;
+}
+
+const {
+  paths = defaultPaths,
+  showConvergence = true,
+  animated = true,
+  class: className = ""
+} = Astro.props;
+---
+
+<div class={`hero-network-container ${className}`} aria-hidden="true">
+  <svg 
+    class="network-svg"
+    viewBox="0 0 1280 450" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <defs>
+      <!-- Gradient Defs for all Network Paths -->
+      {paths.map((path) => (
+        <HeroSignal path={path} />
+      ))}
+
+      <!-- Convergence Focal Point Radial Glow -->
+      <radialGradient id="focalGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#CB6CE6" stop-opacity="0.4" />
+        <stop offset="60%" stop-color="#C759E1" stop-opacity="0.15" />
+        <stop offset="100%" stop-color="#CB6CE6" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    <!-- Focal convergence at the horizon -->
+    {showConvergence && <HeroConvergence />}
+
+    <!-- Dynamic Base Paths & Animated Glowing Light Beams -->
+    {paths.map((path) => (
+      <HeroNetworkPath path={path} animated={animated} />
+    ))}
+  </svg>
+</div>
+
+<style>
+  .hero-network-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+  }
+
+  .network-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Light Beam Draw paths: short glowing head pulse (90px beam over 1000px pathLength) */
+  :global(.beam-path) {
+    stroke-dasharray: 90 910;
+    animation-name: beamDraw;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: stroke-dashoffset, opacity;
+  }
+
+  @keyframes beamDraw {
+    0% {
+      stroke-dashoffset: 1000;
+      opacity: 0;
+    }
+    6% {
+      opacity: 1;
+    }
+    94% {
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 0;
+      opacity: 0;
+    }
+  }
+
+  :global(.focal-glow-pulse) {
+    animation: glowBreathe 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes glowBreathe {
+    0% {
+      transform: scale(0.92);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(1.15);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.beam-path), 
+    :global(.focal-glow-pulse) {
+      animation: none !important;
+    }
+  }
+</style>

@@ -45,7 +45,7 @@ export const BentoCard = ({
   children,
   className = '',
   disableAnimations = false,
-  style,
+  style = {},
   particleCount = DEFAULT_PARTICLE_COUNT,
   glowColor = DEFAULT_GLOW_COLOR,
   enableTilt = true,

@@ -1,0 +1,131 @@
+---
+import Card from '../ui/Card.astro';
+import Container from '../layout/Container.astro';
+import type { FeaturesSectionProps } from '../../types/features';
+import { featuresData as defaultFeaturesData } from '../../data/features';
+
+interface Props extends Partial<FeaturesSectionProps> {}
+
+const {
+  id = defaultFeaturesData.id || "solution",
+  tag = defaultFeaturesData.tag,
+  title = defaultFeaturesData.title,
+  description = defaultFeaturesData.description,
+  features = defaultFeaturesData.features,
+  class: className = ""
+} = Astro.props;
+---
+
+<section class={`features-section ${className}`} id={id}>
+  <Container size="lg" class="features-container">
+    <div class="section-header">
+      {tag && <span class="section-tag">{tag}</span>}
+      <h2 class="section-title">{title}</h2>
+      {description && <p class="section-desc">{description}</p>}
+    </div>
+
+    {features && features.length > 0 && (
+      <div class="features-grid">
+        {features.map((feature) => (
+          <Card variant="bordered" hoverEffect={true} class="feature-card">
+            <div class={`feature-icon ${feature.iconColorClass}`}>
+              <Fragment set:html={feature.icon} />
+            </div>
+            <h3>{feature.title}</h3>
+            <p>{feature.description}</p>
+          </Card>
+        ))}
+      </div>
+    )}
+  </Container>
+</section>
+
+<style>
+  .features-section {
+    padding: 96px 0;
+    background-color: var(--color-parchment, #F7F4ED);
+    border-top: 1px solid var(--color-parchment-border, #ECEAE4);
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 64px auto;
+  }
+
+  .section-tag {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-brand, #CB6CE6);
+    letter-spacing: 0.08em;
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-ink, #181330);
+    margin: 12px 0 16px 0;
+    letter-spacing: -1.44px;
+    line-height: 1.15;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--color-dove, #5C5566);
+    line-height: 1.5;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md, 12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .feature-icon.purple { 
+    background-color: var(--color-lavender, #F3E6FB); 
+    color: var(--color-brand, #CB6CE6); 
+  }
+  .feature-icon.iris { 
+    background-color: var(--color-mist, #E4DFEA); 
+    color: var(--color-iris, #5B3AC4); 
+  }
+  .feature-icon.amethyst { 
+    background-color: var(--color-lavender, #F3E6FB); 
+    color: var(--color-amethyst, #9A4DC1); 
+  }
+
+  .feature-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-ink, #181330);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-card p {
+    font-size: 15px;
+    color: var(--color-dove, #5C5566);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1023px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+    .section-title {
+      font-size: 30px;
+    }
+  }
+</style>

@@ -1,0 +1,951 @@
+---
+import EmbryoLogo from '../EmbryoLogo.astro';
+import { navigationData as defaultNavData } from '../../data/navigation';
+import type { NavigationData } from '../../types/navigation';
+
+interface Props {
+  navData?: NavigationData;
+  class?: string;
+}
+
+const {
+  navData = defaultNavData,
+  class: className = ""
+} = Astro.props;
+
+const { megaMenus, directLinks, actions } = navData;
+const { products, solutions, ai } = megaMenus;
+---
+
+<header class={`site-header ${className}`}>
+  <div class="header-container">
+    <!-- Left: Brand Logo & Site Title -->
+    <div class="header-left">
+      <a href="/" class="logo-link" aria-label="Embryo One">
+        <EmbryoLogo height={28} />
+      </a>
+    </div>
+
+    <!-- Center: Main Navigation with Rich Mega-Menus -->
+    <nav class="nav-center" aria-label="Main Navigation">
+      
+      <!-- 1. "Products" Mega-Menu (3 Columns) -->
+      <div class="nav-item has-dropdown">
+        <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+          <span>{products.triggerLabel}</span>
+          <svg class="chevron-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+
+        <div class={`mega-menu ${products.dropdownClass || "dropdown-products"}`} role="region" aria-label="Products Submenu">
+          <div class="mega-menu-content grid-3-col">
+            {products.columns?.map((col) => (
+              <div class="dropdown-col">
+                <span class="dropdown-col-title">{col.title}</span>
+                <div class="dropdown-items-group">
+                  {col.items.map((item) => (
+                    <a href={item.href} class="dropdown-item">
+                      <div class="item-icon-box">
+                        <Fragment set:html={item.icon} />
+                      </div>
+                      <div class="item-text">
+                        <span class="item-title">{item.title}</span>
+                        <span class="item-desc">{item.description}</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. "Solutions" Mega-Menu (2 Columns) -->
+      <div class="nav-item has-dropdown">
+        <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+          <span>{solutions.triggerLabel}</span>
+          <svg class="chevron-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+
+        <div class={`mega-menu ${solutions.dropdownClass || "dropdown-solutions"}`} role="region" aria-label="Solutions Submenu">
+          <div class="mega-menu-content grid-2-col">
+            {solutions.columns?.map((col) => (
+              <div class="dropdown-col">
+                <span class="dropdown-col-title">{col.title}</span>
+                <div class="dropdown-items-group">
+                  {col.items.map((item) => (
+                    <a href={item.href} class="dropdown-item">
+                      <div class="item-icon-box">
+                        <Fragment set:html={item.icon} />
+                      </div>
+                      <div class="item-text">
+                        <span class="item-title">{item.title}</span>
+                        <span class="item-desc">{item.description}</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Direct Links (e.g. Security) -->
+      {directLinks && directLinks.map((link) => (
+        <div class="nav-item">
+          <a href={link.href} class="nav-link">{link.label}</a>
+        </div>
+      ))}
+
+      <!-- 4. "AI" Mega-Menu (2 Columns) -->
+      <div class="nav-item has-dropdown">
+        <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+          <span>{ai.triggerLabel}</span>
+          <svg class="chevron-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+
+        <div class={`mega-menu ${ai.dropdownClass || "dropdown-ai"}`} role="region" aria-label="AI Submenu">
+          <div class="mega-menu-content">
+            <span class="dropdown-col-title">{ai.columns?.[0]?.title || "AI"}</span>
+            <div class="grid-2-col">
+              {ai.columns?.map((col) => (
+                <div class="dropdown-items-group">
+                  {col.items.map((item) => (
+                    <a href={item.href} class="dropdown-item">
+                      <div class="item-icon-box">
+                        <Fragment set:html={item.icon} />
+                      </div>
+                      <div class="item-text">
+                        <span class="item-title">{item.title}</span>
+                        <span class="item-desc">{item.description}</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- Right: Action Buttons -->
+    <div class="header-right">
+      <a href={actions.login.href} class="btn-ghost">{actions.login.label}</a>
+      <a href={actions.bookDemo.href} class="btn-cta">{actions.bookDemo.label}</a>
+
+      <!-- Mobile Menu Hamburger Toggle Button -->
+      <button 
+        type="button" 
+        class="mobile-menu-btn" 
+        id="mobile-menu-toggle" 
+        aria-label="Toggle navigation menu" 
+        aria-expanded="false" 
+        aria-controls="mobile-menu"
+      >
+        <span class="hamburger-box">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Collapsible Mobile Menu Panel -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <div class="mobile-accordion-list">
+        
+        <!-- Mobile Accordion: Products -->
+        <div class="mobile-accordion-item">
+          <button type="button" class="mobile-accordion-header" data-target="mobile-sub-products">
+            <span>{products.triggerLabel}</span>
+            <svg class="mobile-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div id="mobile-sub-products" class="mobile-accordion-body">
+            {products.columns?.map((col) => (
+              <>
+                <span class="mobile-cat-title">{col.title}</span>
+                {col.items.map((item) => (
+                  <a href={item.href} class="mobile-sub-item">{item.title}</a>
+                ))}
+              </>
+            ))}
+          </div>
+        </div>
+
+        <!-- Mobile Accordion: Solutions -->
+        <div class="mobile-accordion-item">
+          <button type="button" class="mobile-accordion-header" data-target="mobile-sub-solutions">
+            <span>{solutions.triggerLabel}</span>
+            <svg class="mobile-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div id="mobile-sub-solutions" class="mobile-accordion-body">
+            {solutions.columns?.map((col) => (
+              <>
+                <span class="mobile-cat-title">{col.title}</span>
+                {col.items.map((item) => (
+                  <a href={item.href} class="mobile-sub-item">{item.title}</a>
+                ))}
+              </>
+            ))}
+          </div>
+        </div>
+
+        <!-- Mobile Direct Links -->
+        {directLinks && directLinks.map((link) => (
+          <a href={link.href} class="mobile-nav-link-direct">{link.label}</a>
+        ))}
+
+        <!-- Mobile Accordion: AI -->
+        <div class="mobile-accordion-item">
+          <button type="button" class="mobile-accordion-header" data-target="mobile-sub-ai">
+            <span>{ai.triggerLabel}</span>
+            <svg class="mobile-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div id="mobile-sub-ai" class="mobile-accordion-body">
+            {ai.columns?.map((col) => (
+              <>
+                <span class="mobile-cat-title">{col.title}</span>
+                {col.items.map((item) => (
+                  <a href={item.href} class="mobile-sub-item">{item.title}</a>
+                ))}
+              </>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mobile-menu-divider"></div>
+
+      <div class="mobile-menu-actions">
+        <a href={actions.login.href} class="mobile-btn-ghost">{actions.login.label}</a>
+        <a href={actions.bookDemo.href} class="mobile-btn-cta">{actions.bookDemo.label}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 68px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(24, 19, 48, 0.07);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .header-container {
+    max-width: 1320px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 32px; /* Consistent px-8 edge padding matching Lovable reference */
+    display: flex;
+    align-items: center; /* Perfect vertical alignment along unified horizontal center axis */
+    justify-content: space-between;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  /* Left Section */
+  .header-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .logo-link:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  /* Center Navigation Links */
+  .nav-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px; /* Tightened horizontal gap matching reference (gap-6 to gap-7) */
+  }
+
+  .nav-item {
+    position: static;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-trigger,
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px; /* Subtle close spacing (gap-1 / ml-1) between label and chevron */
+    font-size: 14px;
+    font-weight: 500;
+    color: #4b5563;
+    padding: 6px 10px;
+    border-radius: 8px; /* Clean rounded-md hover shape */
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    font-family: inherit;
+    line-height: 1.2;
+  }
+
+  /* Subtle compact down-arrow chevron vertically centered with text baseline */
+  .chevron-icon {
+    width: 13px;
+    height: 13px;
+    opacity: 0.6;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease, color 0.15s ease;
+  }
+
+  .nav-item:hover .nav-trigger,
+  .nav-item.is-active .nav-trigger,
+  .nav-trigger:focus-visible {
+    color: #111827;
+    background-color: #FAF5FF;
+    border-color: #E9D5FF;
+  }
+
+  .nav-item:hover .chevron-icon,
+  .nav-item.is-active .chevron-icon {
+    transform: rotate(180deg);
+    opacity: 1;
+    color: #7E22CE;
+  }
+
+  .nav-link:hover {
+    color: #111827;
+    background-color: #FAF5FF;
+    border-color: #E9D5FF;
+  }
+
+  /* Mega-Menu Dropdowns */
+  .mega-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    background: #FFFFFF;
+    border: 1px solid rgba(24, 19, 48, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 24px 54px -12px rgba(24, 19, 48, 0.14), 0 4px 16px -2px rgba(24, 19, 48, 0.04);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s ease;
+    z-index: 150;
+    box-sizing: border-box;
+  }
+
+  .mega-menu::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 0;
+    right: 0;
+    height: 16px;
+    background: transparent;
+  }
+
+  .nav-item:hover .mega-menu,
+  .nav-item:focus-within .mega-menu,
+  .nav-item.is-active .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .dropdown-products {
+    left: 32px;
+    width: 880px;
+  }
+
+  .dropdown-solutions {
+    left: 120px;
+    width: 720px;
+  }
+
+  .dropdown-ai {
+    left: 280px;
+    width: 620px;
+  }
+
+  .mega-menu-content {
+    padding: 28px 32px 32px 32px;
+  }
+
+  .grid-3-col {
+    display: grid;
+    grid-template-columns: 1.15fr 1.05fr 1.05fr;
+    gap: 32px;
+  }
+
+  .grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .dropdown-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dropdown-col-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #7E22CE;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+    user-select: none;
+  }
+
+  .dropdown-items-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+    box-sizing: border-box;
+  }
+
+  .dropdown-item:hover {
+    background-color: #FAF5FF;
+    transform: translateX(2px);
+  }
+
+  .item-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: #F3F4F6;
+    color: #4B5563;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .dropdown-item:hover .item-icon-box {
+    background-color: #EDE9FE;
+    color: #7E22CE;
+  }
+
+  .item-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .item-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.25;
+    transition: color 0.15s ease;
+  }
+
+  .dropdown-item:hover .item-title {
+    color: #6B21A8;
+  }
+
+  .item-desc {
+    font-size: 11.5px;
+    font-weight: 400;
+    color: #6B7280;
+    line-height: 1.38;
+  }
+
+  /* Right Section Actions - Unified Cohesive Button Geometry */
+  .header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+    gap: 12px;
+  }
+
+  /* Secondary "Log in" button (Medium rounded corners rounded-lg/md, identical height) */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 16px; /* py-2 px-4 */
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+    text-decoration: none;
+    border-radius: 8px; /* rounded-lg / rounded-md (6px-8px) */
+    background: #FFFFFF;
+    border: 1px solid rgba(24, 19, 48, 0.16);
+    box-sizing: border-box;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .btn-ghost:hover {
+    color: #000000;
+    background-color: #F9FAFB;
+    border-color: rgba(24, 19, 48, 0.3);
+  }
+
+  /* Primary CTA "Book Demo" button (Solid dark, identical 36px height & matching 8px radius) */
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 18px; /* py-2 px-4.5 */
+    font-size: 14px;
+    font-weight: 500;
+    color: #FFFFFF;
+    background-color: #181330; /* Solid dark */
+    border: 1px solid #181330;
+    text-decoration: none;
+    border-radius: 8px; /* Cohesive matching rounded-md/lg */
+    box-shadow: 0 1px 2px rgba(18, 12, 31, 0.08);
+    box-sizing: border-box;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .btn-cta:hover {
+    background-color: #2D1A3E;
+    border-color: #2D1A3E;
+    box-shadow: 0 4px 12px rgba(18, 12, 31, 0.18);
+    transform: translateY(-1px);
+  }
+
+  .btn-cta:active {
+    transform: translateY(0);
+  }
+
+  /* Mobile Hamburger Toggle */
+  .mobile-menu-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #111827;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .mobile-menu-btn:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .hamburger-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 18px;
+    height: 14px;
+    position: relative;
+  }
+
+  .hamburger-bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #111827;
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .mobile-menu-btn[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .mobile-menu-btn[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-btn[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Collapsible Mobile Menu Drawer */
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+    overflow-y: auto;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  }
+
+  .mobile-menu.is-open {
+    max-height: 80vh;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu-inner {
+    padding: 20px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  .mobile-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-accordion-item {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #FFFFFF;
+  }
+
+  .mobile-accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+  }
+
+  .mobile-chevron {
+    transition: transform 0.2s ease;
+    color: #6B7280;
+  }
+
+  .mobile-accordion-item.is-open .mobile-chevron {
+    transform: rotate(180deg);
+    color: #7E22CE;
+  }
+
+  .mobile-accordion-body {
+    display: none;
+    flex-direction: column;
+    padding: 0 16px 14px 16px;
+    gap: 6px;
+    background: #FAF8FC;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-accordion-item.is-open .mobile-accordion-body {
+    display: flex;
+  }
+
+  .mobile-cat-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #7E22CE;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-bottom: 2px;
+  }
+
+  .mobile-sub-item {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .mobile-sub-item:hover {
+    background-color: #EDE9FE;
+    color: #6B21A8;
+  }
+
+  .mobile-nav-link-direct {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    text-decoration: none;
+    padding: 13px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    background: #FFFFFF;
+    transition: background-color 0.15s ease;
+  }
+
+  .mobile-nav-link-direct:hover {
+    background-color: #FAF5FF;
+    color: #7E22CE;
+  }
+
+  .mobile-menu-divider {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.06);
+    margin: 4px 0;
+  }
+
+  .mobile-menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mobile-btn-ghost {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #181330;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid rgba(24, 19, 48, 0.18);
+    background-color: #ffffff;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .mobile-btn-ghost:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-btn-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #181330;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.15s ease;
+  }
+
+  .mobile-btn-cta:hover {
+    background-color: #2D1A3E;
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1080px) {
+    .dropdown-products {
+      left: 20px;
+      width: calc(100vw - 40px);
+      max-width: 860px;
+    }
+    .dropdown-solutions {
+      left: 20px;
+      width: calc(100vw - 40px);
+      max-width: 700px;
+    }
+    .dropdown-ai {
+      left: 20px;
+      width: calc(100vw - 40px);
+      max-width: 600px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .nav-center {
+      display: none;
+    }
+    .mobile-menu-btn {
+      display: inline-flex;
+    }
+    .mobile-menu {
+      display: block;
+    }
+    .header-right .btn-ghost {
+      display: none;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .header-container {
+      padding: 0 20px;
+    }
+    .header-right .btn-cta {
+      display: none;
+    }
+  }
+
+  @media (min-width: 961px) {
+    .mobile-menu {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  function setupMegaMenus() {
+    const navItems = document.querySelectorAll<HTMLElement>('.nav-item.has-dropdown');
+    
+    navItems.forEach((item) => {
+      let closeTimeout: number | undefined;
+      const trigger = item.querySelector<HTMLButtonElement>('.nav-trigger');
+
+      item.addEventListener('mouseenter', () => {
+        if (closeTimeout) clearTimeout(closeTimeout);
+        navItems.forEach(other => {
+          if (other !== item) {
+            other.classList.remove('is-active');
+            other.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+        item.classList.add('is-active');
+        trigger?.setAttribute('aria-expanded', 'true');
+      });
+
+      item.addEventListener('mouseleave', () => {
+        closeTimeout = window.setTimeout(() => {
+          item.classList.remove('is-active');
+          trigger?.setAttribute('aria-expanded', 'false');
+        }, 120);
+      });
+
+      trigger?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const isOpen = item.classList.contains('is-active');
+          item.classList.toggle('is-active', !isOpen);
+          trigger.setAttribute('aria-expanded', String(!isOpen));
+        } else if (e.key === 'Escape') {
+          item.classList.remove('is-active');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as Node;
+      navItems.forEach(item => {
+        if (!item.contains(target)) {
+          item.classList.remove('is-active');
+          item.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (!toggleBtn || !mobileMenu) return;
+
+    function toggleMenu(force?: boolean) {
+      const isCurrentlyOpen = mobileMenu?.classList.contains('is-open');
+      const shouldOpen = force !== undefined ? force : !isCurrentlyOpen;
+      
+      mobileMenu?.classList.toggle('is-open', shouldOpen);
+      toggleBtn?.setAttribute('aria-expanded', String(shouldOpen));
+      mobileMenu?.setAttribute('aria-hidden', String(!shouldOpen));
+    }
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        toggleMenu(false);
+      });
+    });
+
+    const accordionHeaders = document.querySelectorAll<HTMLButtonElement>('.mobile-accordion-header');
+    accordionHeaders.forEach((header) => {
+      header.addEventListener('click', () => {
+        const parent = header.closest('.mobile-accordion-item');
+        if (parent) {
+          const isOpen = parent.classList.contains('is-open');
+          document.querySelectorAll('.mobile-accordion-item').forEach(item => {
+            if (item !== parent) item.classList.remove('is-open');
+          });
+          parent.classList.toggle('is-open', !isOpen);
+        }
+      });
+    });
+  }
+
+  setupMegaMenus();
+  document.addEventListener('astro:page-load', setupMegaMenus);
+</script>

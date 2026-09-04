@@ -1,0 +1,74 @@
+---
+interface Props {
+  size?: "sm" | "md" | "lg" | "marketing" | "full";
+  class?: string;
+  id?: string;
+}
+
+const {
+  size = "marketing",
+  class: className = "",
+  id
+} = Astro.props;
+
+const classes = [
+  "eo-container",
+  `container-${size}`,
+  className
+].filter(Boolean).join(" ");
+---
+
+<div id={id} class={classes}>
+  <slot />
+</div>
+
+<style>
+  .eo-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  .container-sm {
+    max-width: 640px;
+    padding: 0 20px;
+  }
+
+  .container-md {
+    max-width: 960px;
+    padding: 0 24px;
+  }
+
+  .container-lg {
+    max-width: 1200px;
+    padding: 0 32px;
+  }
+
+  .container-marketing {
+    max-width: 1360px;
+    padding: 0 32px;
+  }
+
+  .container-full {
+    max-width: 100%;
+    padding: 0 24px;
+  }
+
+  @media (max-width: 1023px) {
+    .container-marketing,
+    .container-lg {
+      padding: 0 24px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .container-sm,
+    .container-md,
+    .container-lg,
+    .container-marketing,
+    .container-full {
+      padding: 0 16px;
+    }
+  }
+</style>

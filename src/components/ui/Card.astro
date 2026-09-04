@@ -1,0 +1,54 @@
+---
+interface Props {
+  variant?: "elevated" | "flat" | "bordered";
+  hoverEffect?: boolean;
+  class?: string;
+}
+
+const {
+  variant = "bordered",
+  hoverEffect = true,
+  class: className = ""
+} = Astro.props;
+
+const classes = [
+  "eo-card",
+  `card-${variant}`,
+  hoverEffect ? "card-hover" : "",
+  className
+].filter(Boolean).join(" ");
+---
+
+<div class={classes}>
+  <slot />
+</div>
+
+<style>
+  .eo-card {
+    background-color: var(--color-white, #FFFFFF);
+    border-radius: var(--radius-lg, 16px);
+    padding: 32px;
+    box-sizing: border-box;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-bordered {
+    border: 1px solid var(--color-parchment-border, #ECEAE4);
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(18, 12, 31, 0.05));
+  }
+
+  .card-elevated {
+    border: 1px solid rgba(24, 19, 48, 0.06);
+    box-shadow: var(--shadow-md, 0 4px 16px rgba(18, 12, 31, 0.06));
+  }
+
+  .card-flat {
+    border: none;
+    box-shadow: none;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md, 0 4px 16px rgba(18, 12, 31, 0.06));
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+import type { FooterProps } from '../../types/features';
+
+interface Props extends FooterProps {}
+
+const {
+  brandName = "EmbryoOne",
+  copyrightText = "© 2026 EmbryoOne Technologies Inc. All rights reserved.",
+  links = [
+    { label: "Privacy Policy", href: "#privacy" },
+    { label: "Terms of Service", href: "#terms" },
+    { label: "Security", href: "#security" }
+  ],
+  class: className = ""
+} = Astro.props;
+---
+
+<footer class={`site-footer ${className}`}>
+  <div class="footer-container">
+    <div class="footer-brand">
+      <span class="footer-logo">{brandName}</span>
+      <p>{copyrightText}</p>
+    </div>
+    {links && links.length > 0 && (
+      <div class="footer-links">
+        {links.map((link) => (
+          <a href={link.href}>{link.label}</a>
+        ))}
+      </div>
+    )}
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-white, #FFFFFF);
+    border-top: 1px solid var(--color-parchment-border, #ECEAE4);
+    padding: 32px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .footer-logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-amethyst, #9A4DC1);
+  }
+
+  .footer-brand p {
+    font-size: 13px;
+    color: var(--color-steel, #888494);
+    margin-top: 4px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--color-dove, #5C5566);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-ink, #181330);
+  }
+
+  @media (max-width: 1023px) {
+    .footer-container {
+      padding: 0 24px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .footer-container {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 0 16px;
+    }
+  }
+</style>

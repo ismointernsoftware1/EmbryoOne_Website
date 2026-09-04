@@ -1,0 +1,26 @@
+---
+interface Props {
+  cx?: number;
+  cy?: number;
+  glowRadius?: number;
+  class?: string;
+}
+
+const {
+  cx = 640,
+  cy = 440,
+  glowRadius = 50,
+  class: className = ""
+} = Astro.props;
+---
+
+<g class={`hero-convergence-group ${className}`}>
+  <!-- Outer Radial Breathing Glow -->
+  <circle cx={cx} cy={cy} r={glowRadius} fill="url(#focalGlow)" class="focal-glow-pulse" />
+  
+  <!-- Core Point -->
+  <circle cx={cx} cy={cy} r="4" fill="#CB6CE6" />
+  
+  <!-- Concentric Halo -->
+  <circle cx={cx} cy={cy} r="8" stroke="#DB97F5" stroke-width="1" fill="none" opacity="0.6" />
+</g>

@@ -1,18 +1,28 @@
 ---
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/hero/Hero.astro';
 import EnterpriseShowcase from '../components/EnterpriseShowcase.astro';
 import FeatureBentoGrid from '../components/FeatureBentoGrid.astro';
 import PlatformStackSection from '../components/PlatformStackSection.jsx';
+import FeaturesSection from '../components/sections/FeaturesSection.astro';
 import SecuritySection from '../components/SecuritySection.astro';
-import Layout from '../layouts/Layout.astro';
+
+import { heroData, heroTiles, heroNetworkPaths } from '../data/hero';
+import { featuresData } from '../data/features';
+import { footerData } from '../data/footer';
 ---
 
 <Layout title="EmbryoOne — Connect Intelligence to the Real World">
 	<Header />
 	<main>
-		<!-- Integrated Hero Section (Marketing Copy, Floating Tiles, Light Beam Draw Network & Product Showcase) -->
-		<Hero />
+		<!-- Integrated Hero Section with Floating Tiles, Animated Network & Product Showcase -->
+		<Hero 
+			{...heroData} 
+			tiles={heroTiles} 
+			networkPaths={heroNetworkPaths} 
+		/>
 
 		<!-- Enterprise Showcase Card with GSAP ScrollReveal -->
 		<EnterpriseShowcase />
@@ -24,221 +34,17 @@ import Layout from '../layouts/Layout.astro';
 		<PlatformStackSection client:load />
 
 		<!-- Features & Capabilities Grid Section -->
-		<section class="features-section" id="platform">
-			<div class="features-container">
-				<div class="section-header">
-					<span class="section-tag">UNIFIED INTELLIGENCE</span>
-					<h2 class="section-title">Architected for edge-to-cloud operations</h2>
-					<p class="section-desc">
-						EmbryoOne eliminates the boundary between machine sensors, autonomous AI inference, and operational workflows.
-					</p>
-				</div>
-
-				<div class="features-grid">
-					<div class="feature-card">
-						<div class="feature-icon purple">
-							<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-								<path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-								<circle cx="12" cy="12" r="3"/>
-							</svg>
-						</div>
-						<h3>Real-World AI Models</h3>
-						<p>Deploy specialized vision and telemetry models directly to edge nodes with sub-5ms latency execution.</p>
-					</div>
-
-					<div class="feature-card">
-						<div class="feature-icon iris">
-							<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-								<rect x="4" y="4" width="16" height="16" rx="2"/>
-								<rect x="9" y="9" width="6" height="6"/>
-								<path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/>
-							</svg>
-						</div>
-						<h3>Universal Hardware Integration</h3>
-						<p>Seamlessly connect legacy industrial equipment, IoT microcontrollers, and modern edge gateways without custom drivers.</p>
-					</div>
-
-					<div class="feature-card">
-						<div class="feature-icon amethyst">
-							<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-								<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-							</svg>
-						</div>
-						<h3>Autonomous Closed-Loop Control</h3>
-						<p>Automatically adjust equipment parameters, trigger safety interventions, and optimize real-time throughput based on AI stream predictions.</p>
-					</div>
-				</div>
-			</div>
-		</section>
+		<FeaturesSection {...featuresData} />
 		
 		<!-- Enterprise Security & Governance Section -->
 		<SecuritySection />
 	</main>
 
-	<footer class="site-footer">
-		<div class="footer-container">
-			<div class="footer-brand">
-				<span class="footer-logo">EmbryoOne</span>
-				<p>© 2026 EmbryoOne Technologies Inc. All rights reserved.</p>
-			</div>
-			<div class="footer-links">
-				<a href="#privacy">Privacy Policy</a>
-				<a href="#terms">Terms of Service</a>
-				<a href="#security">Security</a>
-			</div>
-		</div>
-	</footer>
+	<Footer {...footerData} />
 </Layout>
 
 <style>
 	main {
 		width: 100%;
-	}
-
-	.features-section {
-		padding: 96px 0;
-		background-color: var(--color-parchment);
-		border-top: 1px solid var(--color-parchment-border);
-	}
-
-	.features-container {
-		max-width: 1280px;
-		margin: 0 auto;
-		padding: 0 32px;
-	}
-
-	.section-header {
-		text-align: center;
-		max-width: 640px;
-		margin: 0 auto 64px auto;
-	}
-
-	.section-tag {
-		font-size: 12px;
-		font-weight: 700;
-		color: var(--color-brand);
-		letter-spacing: 0.08em;
-	}
-
-	.section-title {
-		font-size: 36px;
-		font-weight: 700;
-		color: var(--color-ink);
-		margin: 12px 0 16px 0;
-		letter-spacing: -1.44px;
-	}
-
-	.section-desc {
-		font-size: 16px;
-		color: var(--color-dove);
-		line-height: 1.5;
-	}
-
-	.features-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 24px;
-	}
-
-	.feature-card {
-		background-color: var(--color-white);
-		border: 1px solid var(--color-parchment-border);
-		border-radius: var(--radius-lg);
-		padding: 32px;
-		box-shadow: var(--shadow-sm);
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
-	}
-
-	.feature-card:hover {
-		transform: translateY(-4px);
-		box-shadow: var(--shadow-md);
-	}
-
-	.feature-icon {
-		width: 48px;
-		height: 48px;
-		border-radius: var(--radius-md);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-bottom: 20px;
-	}
-	.feature-icon.purple { background-color: var(--color-lavender); color: var(--color-brand); }
-	.feature-icon.iris { background-color: var(--color-mist); color: var(--color-iris); }
-	.feature-icon.amethyst { background-color: var(--color-lavender); color: var(--color-amethyst); }
-
-	.feature-card h3 {
-		font-size: 20px;
-		font-weight: 700;
-		color: var(--color-ink);
-		margin-bottom: 10px;
-	}
-
-	.feature-card p {
-		font-size: 15px;
-		color: var(--color-dove);
-		line-height: 1.5;
-	}
-
-	.site-footer {
-		background-color: var(--color-white);
-		border-top: 1px solid var(--color-parchment-border);
-		padding: 32px 0;
-	}
-
-	.footer-container {
-		max-width: 1280px;
-		margin: 0 auto;
-		padding: 0 32px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-
-	.footer-logo {
-		font-size: 18px;
-		font-weight: 700;
-		color: var(--color-amethyst);
-	}
-
-	.footer-brand p {
-		font-size: 13px;
-		color: var(--color-steel);
-		margin-top: 4px;
-	}
-
-	.footer-links {
-		display: flex;
-		gap: 24px;
-	}
-
-	.footer-links a {
-		font-size: 13px;
-		color: var(--color-dove);
-		transition: color 0.15s ease;
-	}
-
-	.footer-links a:hover {
-		color: var(--color-ink);
-	}
-
-	@media (max-width: 1023px) {
-		.features-grid {
-			grid-template-columns: 1fr;
-		}
-		.features-container, .footer-container {
-			padding: 0 24px;
-		}
-		.section-title {
-			font-size: 30px;
-		}
-	}
-
-	@media (max-width: 639px) {
-		.footer-container {
-			flex-direction: column;
-			gap: 16px;
-			align-items: flex-start;
-		}
 	}
 </style>
