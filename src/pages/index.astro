@@ -1,50 +1,56 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
-import Footer from '../components/layout/Footer.astro';
-import Hero from '../components/hero/Hero.astro';
+
+import HeroSection from '../components/HeroSection.tsx';
 import EnterpriseShowcase from '../components/EnterpriseShowcase.astro';
 import FeatureBentoGrid from '../components/FeatureBentoGrid.astro';
 import PlatformStackSection from '../components/PlatformStackSection.jsx';
 import FeaturesSection from '../components/sections/FeaturesSection.astro';
 import SecuritySection from '../components/SecuritySection.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/footer/Footer.tsx';
 
-import { heroData, heroTiles, heroNetworkPaths } from '../data/hero';
 import { featuresData } from '../data/features';
-import { footerData } from '../data/footer';
 ---
 
-<Layout title="EmbryoOne — Connect Intelligence to the Real World">
-	<Header />
-	<main>
-		<!-- Integrated Hero Section with Floating Tiles, Animated Network & Product Showcase -->
-		<Hero 
-			{...heroData} 
-			tiles={heroTiles} 
-			networkPaths={heroNetworkPaths} 
-		/>
+<Layout
+  title="EmbryoOne — Connect Intelligence to the Real World"
+  description="Bring AI, hardware, IoT and software together in one intelligent platform built for the real world."
+>
+  <!-- HEADER -->
+  <Header />
 
-		<!-- Enterprise Showcase Card with GSAP ScrollReveal -->
-		<EnterpriseShowcase />
+  <main>
+    <!-- COLLEAGUE HERO -->
+    <HeroSection client:load />
 
-		<!-- Editorial Bento Grid Feature Showcase -->
-		<FeatureBentoGrid />
+    <!-- ENTERPRISE SHOWCASE -->
+    <EnterpriseShowcase />
 
-		<!-- ScrollStack Platform Capabilities Section ("Get to know us" Stacking Cards) -->
-		<PlatformStackSection client:load />
+    <!-- FEATURE BENTO GRID -->
+    <FeatureBentoGrid />
 
-		<!-- Features & Capabilities Grid Section -->
-		<FeaturesSection {...featuresData} />
-		
-		<!-- Enterprise Security & Governance Section -->
-		<SecuritySection />
-	</main>
+    <!-- PLATFORM STACK SECTION -->
+    <PlatformStackSection client:load />
 
-	<Footer {...footerData} />
+    <!-- FEATURES SECTION -->
+    <FeaturesSection {...featuresData} />
+
+    <!-- SECURITY SECTION -->
+    <SecuritySection />
+
+    <!-- FAQ SECTION -->
+    <FAQ />
+  </main>
+
+  <!-- FOOTER -->
+  <Footer client:visible />
 </Layout>
 
 <style>
-	main {
-		width: 100%;
-	}
+  main {
+    width: 100%;
+  }
 </style>
+

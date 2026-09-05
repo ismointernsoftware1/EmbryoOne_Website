@@ -1,0 +1,669 @@
+---
+// src/components/HeroConnectors.astro
+import { FlaskConical, Package, Cloud, Cpu, Bell, BarChart3 } from 'lucide-react';
+import { ShootingStarsGrid } from '@/components/shooting-stars-grid';
+// EmbryoOne: Grid-based data pulse network — inspired by shooting-star-grid motion language
+
+interface GridConfig {
+  cols: number;
+  rows: number;
+  spacing: number;
+}
+
+interface StarConfig {
+  id: string;
+  startCol: number;
+  startRow: number;
+  endCol: number;
+  endRow: number;
+  delay: number;
+  duration: number;
+  direction: 'diagonal-down' | 'diagonal-up' | 'horizontal' | 'vertical';
+}
+
+const GRID_DESKTOP: GridConfig = { cols: 12, rows: 8, spacing: 50 };
+const GRID_TABLET: GridConfig = { cols: 10, rows: 6, spacing: 50 };
+const GRID_MOBILE: GridConfig = { cols: 7, rows: 5, spacing: 45 };
+
+// Shooting star paths across the grid - each travels from one edge to another
+const STAR_PATHS: StarConfig[] = [
+  // Diagonal down-right (top-left to bottom-right area)
+  { id: 's1', startCol: 0, startRow: 2, endCol: 11, endRow: 7, delay: 0.0, duration: 3.5, direction: 'diagonal-down' },
+  { id: 's2', startCol: 1, startRow: 0, endCol: 10, endRow: 5, delay: 0.8, duration: 3.2, direction: 'diagonal-down' },
+  { id: 's3', startCol: 3, startRow: 0, endCol: 11, endRow: 4, delay: 1.6, duration: 2.8, direction: 'diagonal-down' },
+  { id: 's4', startCol: 0, startRow: 4, endCol: 8, endRow: 7, delay: 2.4, duration: 3.0, direction: 'diagonal-down' },
+  
+  // Diagonal up-right (bottom-left to top-right area)
+  { id: 's5', startCol: 0, startRow: 6, endCol: 11, endRow: 1, delay: 0.4, duration: 3.8, direction: 'diagonal-up' },
+  { id: 's6', startCol: 2, startRow: 7, endCol: 11, endRow: 3, delay: 1.2, duration: 3.4, direction: 'diagonal-up' },
+  { id: 's7', startCol: 0, startRow: 5, endCol: 9, endRow: 0, delay: 2.0, duration: 3.0, direction: 'diagonal-up' },
+  { id: 's8', startCol: 1, startRow: 7, endCol: 10, endRow: 2, delay: 2.8, duration: 3.6, direction: 'diagonal-up' },
+  
+  // Horizontal (left to right)
+  { id: 's9', startCol: 0, startRow: 3, endCol: 11, endRow: 3, delay: 0.6, duration: 2.5, direction: 'horizontal' },
+  { id: 's10', startCol: 0, startRow: 5, endCol: 11, endRow: 5, delay: 2.2, duration: 2.8, direction: 'horizontal' },
+  
+  // Vertical (top to bottom)
+  { id: 's11', startCol: 4, startRow: 0, endCol: 4, endRow: 7, delay: 1.0, duration: 2.2, direction: 'vertical' },
+  { id: 's12', startCol: 8, startRow: 0, endCol: 8, endRow: 7, delay: 3.0, duration: 2.4, direction: 'vertical' },
+];
+
+const PRIMARY = '#9E50C6';
+const PRIMARY_STRONG = '#8C43B5';
+const PRIMARY_DARK = '#73349A';
+const LIGHT_PURPLE = '#BF73E1';
+const ACCENT = '#CC5AE2';
+const BG = '#17131A';
+const WHITE = '#FFFFFF';
+const GRID_OPACITY = '0.04';
+const GRID_OPACITY_HOVER = '0.08';
+
+const starGradient = (id: string) => `
+<linearGradient id="${id}" x1="0%" y1="0%" x2="100%" y2="100%">
+  <stop offset="0%" stop-color="transparent" />
+  <stop offset="10%" stop-color="${ACCENT}" stop-opacity="0.5" />
+  <stop offset="35%" stop-color="${ACCENT}" />
+  <stop offset="50%" stop-color="${LIGHT_PURPLE}" />
+  <stop offset="65%" stop-color="${ACCENT}" />
+  <stop offset="90%" stop-color="${ACCENT}" stop-opacity="0.5" />
+  <stop offset="100%" stop-color="transparent" />
+</linearGradient>
+`;
+
+const centerGradient = `
+<radialGradient id="center-gradient" cx="50%" cy="50%" r="50%">
+  <stop offset="0%" stop-color="${LIGHT_PURPLE}" />
+  <stop offset="35%" stop-color="${PRIMARY}" />
+  <stop offset="65%" stop-color="${PRIMARY_DARK}" />
+  <stop offset="100%" stop-color="${PRIMARY_STRONG}" />
+</radialGradient>
+`;
+
+const glowGradient = `
+<radialGradient id="glow-gradient" cx="50%" cy="50%" r="50%">
+  <stop offset="0%" stop-color="${PRIMARY}" stop-opacity="0.3" />
+  <stop offset="45%" stop-color="${PRIMARY}" stop-opacity="0.1" />
+  <stop offset="100%" stop-color="${PRIMARY}" stop-opacity="0" />
+</radialGradient>
+`;
+
+const gridDotGradient = `
+<radialGradient id="grid-dot" cx="50%" cy="50%" r="50%">
+  <stop offset="0%" stop-color="${PRIMARY}" stop-opacity="0.6" />
+  <stop offset="70%" stop-color="${PRIMARY}" stop-opacity="0.15" />
+  <stop offset="100%" stop-color="${PRIMARY}" stop-opacity="0" />
+</radialGradient>
+`;
+
+const gridLinePattern = (spacing: number, opacity: string) => `
+<pattern id="grid-lines" width="${spacing}" height="${spacing}" patternUnits="userSpaceOnUse">
+  <line x1="0" y1="0" x2="${spacing}" y2="0" stroke="rgba(255,255,255,${opacity})" stroke-width="0.5"/>
+  <line x1="0" y1="0" x2="0" y2="${spacing}" stroke="rgba(255,255,255,${opacity})" stroke-width="0.5"/>
+</pattern>
+`;
+
+function getStarPath(star: StarConfig, grid: GridConfig, width: number, height: number): { path: string; length: number } {
+  const offsetX = (width - grid.cols * grid.spacing) / 2;
+  const offsetY = (height - grid.rows * grid.spacing) / 2;
+  
+  const sx = offsetX + star.startCol * grid.spacing;
+  const sy = offsetY + star.startRow * grid.spacing;
+  const ex = offsetX + star.endCol * grid.spacing;
+  const ey = offsetY + star.endRow * grid.spacing;
+  
+  const length = Math.sqrt((ex - sx) ** 2 + (ey - sy) ** 2);
+  
+  return { path: `M ${sx} ${sy} L ${ex} ${ey}`, length };
+}
+
+function getGridDots(grid: GridConfig, width: number, height: number): Array<{cx: number, cy: number}> {
+  const dots: Array<{cx: number, cy: number}> = [];
+  const offsetX = (width - grid.cols * grid.spacing) / 2;
+  const offsetY = (height - grid.rows * grid.spacing) / 2;
+  
+  for (let col = 0; col <= grid.cols; col++) {
+    for (let row = 0; row <= grid.rows; row++) {
+      dots.push({
+        cx: offsetX + col * grid.spacing,
+        cy: offsetY + row * grid.spacing
+      });
+    }
+  }
+  return dots;
+}
+
+const VIEWBOX_WIDTH = 600;
+const VIEWBOX_HEIGHT = 400;
+const DESKTOP_GRID = GRID_DESKTOP;
+const DESKTOP_DOTS = getGridDots(DESKTOP_GRID, VIEWBOX_WIDTH, VIEWBOX_HEIGHT);
+const DESKTOP_STAR_PATHS = STAR_PATHS.map(s => ({ ...s, ...getStarPath(s, DESKTOP_GRID, VIEWBOX_WIDTH, VIEWBOX_HEIGHT) }));
+---
+
+<section class="connectors-section relative w-full overflow-hidden bg-[#09090b] py-20" id="connectors-section">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Dedicated Background Grid Layer using ShootingStarsGrid -->
+  <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+    <ShootingStarsGrid starCount={54} shootingStarCount={7} className="min-h-[560px] rounded-3xl bg-transparent border-0" showGrid={true} client:visible>
+      <span class="hidden"></span>
+    </ShootingStarsGrid>
+  </div>
+
+  <div class="container">
+    
+    <!-- LEFT SIDE: Text & CTA -->
+    <div class="text-content">
+      <h2>Connect the systems<br/>that power your laboratory</h2>
+      <p>
+        EmbryoOne integrates seamlessly with your existing laboratory devices, data systems, and clinical workflows. Configured once, connected across your entire operation.
+      </p>
+      <a href="/solutions" class="btn-outline">Explore Our Solutions</a>
+    </div>
+
+    <!-- RIGHT SIDE: Grid Network Visualization -->
+    <div class="visual-content">
+      <svg 
+        class="grid-svg" 
+        viewBox="0 0 600 400" 
+        preserveAspectRatio="xMidYMid meet" 
+        aria-hidden="true" 
+        role="img" 
+        aria-label="EmbryoOne connected technology grid network"
+      >
+        <defs>
+          {gridLinePattern(DESKTOP_GRID.spacing, GRID_OPACITY)}
+          {DESKTOP_STAR_PATHS.map(s => starGradient(`star-gradient-${s.id}`))}
+          {centerGradient}
+          {glowGradient}
+          {gridDotGradient}
+
+          <filter id="star-bloom" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+          
+          <filter id="dot-glow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="0.8" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
+        <!-- 1. Subtle Grid Lines -->
+        <rect class="grid-lines" width="100%" height="100%" fill="url(#grid-lines)" />
+
+        <!-- 2. Grid Dots at Intersections -->
+        <g class="grid-dots" filter="url(#dot-glow)">
+          {DESKTOP_DOTS.map((dot, i) => (
+            <circle
+              key={i}
+              cx={dot.cx}
+              cy={dot.cy}
+              r="1.5"
+              fill="url(#grid-dot)"
+              opacity="0.4"
+              class="grid-dot"
+              style={`--dot-delay: ${(i * 0.02) % 2}s;`}
+            />
+          ))}
+        </g>
+
+        <!-- 3. Shooting Star Data Pulses (diagonal streaks across grid) -->
+        <g class="star-trails" stroke-linecap="round" filter="url(#star-bloom)">
+          {DESKTOP_STAR_PATHS.map((star) => (
+            <path
+              class="star star-{star.direction}"
+              d={star.path}
+              stroke="url(#star-gradient-{star.id})"
+              stroke-width="1.5"
+              fill="none"
+              style={{
+                '--star-length': `${star.length}px`,
+                '--star-delay': `${star.delay}s`,
+                '--star-duration': `${star.duration}s`,
+              }}
+              vector-effect="non-scaling-stroke"
+            />
+          ))}
+        </g>
+
+        <!-- 4. Center Object: EmbryoOne central logo hub -->
+        <g class="center-object" transform="translate(300, 200)">
+          <g class="center-object-breathe">
+            <circle class="center-glow" r="65" fill="url(#glow-gradient)" />
+            <circle class="center-ring-outer" r="48" fill="none" stroke="rgba(158,80,198,0.1)" stroke-width="1" />
+            <circle class="center-ring-middle" r="36" fill="none" stroke="rgba(158,80,198,0.18)" stroke-width="1" />
+            <foreignObject x="-40" y="-40" width="80" height="80">
+              <div class="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-[#120d1f] border-2 border-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.6)] overflow-hidden p-1">
+                <img src="/LOGO_C.avif" alt="Logo" class="h-16 w-16 object-cover rounded-full" />
+              </div>
+            </foreignObject>
+          </g>
+        </g>
+
+        <!-- 5. Orbiting Data Nodes (6 nodes at strategic grid positions) -->
+        <g class="orbit-nodes">
+          {[
+            { id: 'laboratory', label: 'Laboratory', icon: '/Blender.svg', col: 1, row: 2 },
+            { id: 'devices', label: 'Devices', icon: '/Drive.svg', col: 10, row: 1 },
+            { id: 'cloud', label: 'Cloud', icon: '/Notion.svg', col: 2, row: 6 },
+            { id: 'analytics', label: 'Analytics', icon: '/Salesforce.svg', col: 9, row: 6 },
+            { id: 'inventory', label: 'Inventory', icon: '/Slack.svg', col: 1, row: 4 },
+            { id: 'alerts', label: 'Alerts', icon: '/Stack.svg', col: 10, row: 4 },
+          ].map((node, i) => {
+            const offsetX = (VIEWBOX_WIDTH - DESKTOP_GRID.cols * DESKTOP_GRID.spacing) / 2;
+            const offsetY = (VIEWBOX_HEIGHT - DESKTOP_GRID.rows * DESKTOP_GRID.spacing) / 2;
+            const cx = offsetX + node.col * DESKTOP_GRID.spacing;
+            const cy = offsetY + node.row * DESKTOP_GRID.spacing;
+            return (
+              <g
+                class="orbit-node"
+                data-node-id={node.id}
+                transform={`translate(${cx}, ${cy})`}
+              >
+                <g
+                  class="orbit-node-float"
+                  style={{
+                    '--float-duration': `${5.5 + i * 0.6}s`,
+                    '--float-delay': `${i * 0.4}s`,
+                    '--float-x': `${(Math.sin(i * 1.3) * 3).toFixed(1)}px`,
+                    '--float-y': `${(Math.cos(i * 0.9) * 4).toFixed(1)}px`,
+                  }}
+                >
+                  <foreignObject x="-75" y="-20" width="150" height="40" style="overflow: visible;">
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-neutral-900/95 border border-purple-500/20 shadow-lg backdrop-blur-md text-sm font-medium text-white hover:border-purple-500/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-200 cursor-pointer">
+                      <img src={node.icon} alt={node.label} class="h-5 w-5 object-contain flex-shrink-0" />
+                      <span>{node.label}</span>
+                    </div>
+                  </foreignObject>
+                </g>
+              </g>
+            );
+          })}
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const section = document.getElementById('connectors-section');
+      if (!section) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReducedMotion) {
+        const elements = section.querySelectorAll(
+          '.star, .grid-dot, .center-object-breathe, .center-object circle, .orbit-node-float'
+        );
+        elements.forEach((el) => {
+          el.style.animationPlayState = 'paused';
+        });
+      }
+    })();
+  </script>
+</section>
+
+<style>
+  /* =========================================================================
+     1. BASE SECTION
+     ========================================================================= */
+  .connectors-section {
+    background-color: #17131A;
+    padding: 100px 24px;
+    font-family: "DM Sans", sans-serif;
+    color: #FFFFFF;
+    overflow: hidden;
+    position: relative;
+    min-height: 580px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 64px;
+  }
+
+  /* =========================================================================
+     2. LEFT COLUMN: TYPOGRAPHY & CTA
+     ========================================================================= */
+  .text-content {
+    flex: 1;
+    max-width: 480px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .text-content h2 {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .text-content p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 40px;
+  }
+
+  .btn-outline {
+    display: inline-block;
+    padding: 0 20px;
+    height: 48px;
+    line-height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    background: transparent;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease-out;
+  }
+
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* =========================================================================
+     3. RIGHT COLUMN: VISUAL GRID CONTAINER
+     ========================================================================= */
+  .visual-content {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 3 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .grid-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
+    will-change: transform;
+  }
+
+  .grid-lines {
+    transition: opacity 0.6s ease;
+    opacity: 0.5;
+  }
+
+  .connectors-section.in-view .grid-lines {
+    opacity: 1;
+  }
+
+  /* =========================================================================
+     4. GRID DOTS - subtle pulsing at intersections
+     ========================================================================= */
+  .grid-dot {
+    animation: dot-pulse 3s ease-in-out infinite;
+    animation-delay: var(--dot-delay, 0s);
+    transform-origin: center;
+  }
+
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+
+  /* =========================================================================
+     5. SHOOTING STAR DATA PULSES - diagonal streaks across grid
+     
+     Uses stroke-dasharray/dashoffset for "streak" effect:
+     - Short dash (15% of path) with long gap
+     - Travels across full path length
+     - Fades in/out at edges
+     ========================================================================= */
+  .star {
+    stroke-dasharray: 15% 85%;
+    stroke-dashoffset: 0%;
+    opacity: 0;
+    animation: star-travel var(--star-duration, 3s) linear infinite;
+    animation-delay: var(--star-delay, 0s);
+    vector-effect: non-scaling-stroke;
+  }
+
+  @keyframes star-travel {
+    0%   { stroke-dashoffset: 100%; opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { stroke-dashoffset: -100%; opacity: 1; }
+    100% { stroke-dashoffset: -100%; opacity: 0; }
+  }
+
+  /* =========================================================================
+     6. CENTER OBJECT ANIMATIONS
+     ========================================================================= */
+  /* CSS transform animations/transitions live on inner wrappers only, so they
+     never override the SVG transform attributes that place the center object
+     and orbit nodes on the grid. transform-box: fill-box keeps every
+     rotation/scale origin on the element's own center. */
+  .center-object {
+    /* static: grid placement comes from the transform attribute */
+  }
+
+  .center-object-breathe {
+    animation: center-breathe 9s ease-in-out infinite;
+  }
+
+  .center-glow,
+  .center-ring-outer,
+  .center-ring-middle,
+  .center-ring-inner,
+  .center-core,
+  .center-nucleus,
+  .center-nucleus-inner,
+  .grid-dot,
+  .node-icon,
+  .orbit-node-float,
+  .orbit-node-scale {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .center-glow {
+    animation: glow-pulse 7s ease-in-out infinite;
+  }
+
+  .center-ring-outer {
+    animation: ring-rotate 28s linear infinite;
+  }
+
+  .center-ring-middle {
+    animation: ring-rotate 20s linear infinite reverse;
+  }
+
+  .center-ring-inner {
+    animation: ring-pulse 8s ease-in-out infinite;
+  }
+
+  .center-core {
+    animation: core-breathe 7s ease-in-out infinite;
+  }
+
+  .center-nucleus {
+    animation: nucleus-pulse 5s ease-in-out infinite;
+  }
+
+  .center-nucleus-inner {
+    animation: nucleus-inner 4s ease-in-out infinite;
+  }
+
+  /* Node hover emphasis on the center object (JS toggles .center-highlight) */
+  .center-highlight .center-glow {
+    animation: none;
+    opacity: 0.5;
+    transition: opacity 200ms ease-out;
+  }
+
+  .center-highlight .center-core {
+    animation: none;
+    transform: scale(1.05);
+    transition: transform 200ms ease-out;
+  }
+
+  @keyframes center-breathe {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50%      { transform: scale(1.01) rotate(0.2deg); }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.25; transform: scale(1); }
+    50%      { opacity: 0.45; transform: scale(1.02); }
+  }
+
+  @keyframes ring-rotate {
+    from { transform: rotate(0deg); }
+    to     { transform: rotate(360deg); }
+  }
+
+  @keyframes ring-pulse {
+    0%, 100% { opacity: 0.18; transform: scale(1); }
+    50%      { opacity: 0.35; transform: scale(1.015); }
+  }
+
+  @keyframes core-breathe {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.015); opacity: 0.96; }
+  }
+
+  @keyframes nucleus-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50%      { transform: scale(1.03); opacity: 1; }
+  }
+
+  @keyframes nucleus-inner {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.1); }
+  }
+
+  /* =========================================================================
+     7. ORBIT NODES
+     ========================================================================= */
+  .orbit-node {
+    /* static: grid placement comes from the transform attribute; the float
+       and hover-scale transforms live on inner wrappers below */
+    pointer-events: all;
+  }
+
+  .orbit-node-float {
+    animation: node-float var(--float-duration, 6s) ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
+  }
+
+  .orbit-node-scale {
+    transition: transform 200ms ease-out;
+  }
+
+  @keyframes node-float {
+    0%, 100%   { transform: translate(var(--float-x, 0), var(--float-y, 0)); }
+    25%        { transform: translate(calc(var(--float-x, 0) * -0.4), calc(var(--float-y, 0) * 1.1)); }
+    50%        { transform: translate(calc(var(--float-x, 0) * 1.2), calc(var(--float-y, 0) * -0.6)); }
+    75%        { transform: translate(calc(var(--float-x, 0) * -0.7), calc(var(--float-y, 0) * -1.0)); }
+  }
+
+  .node-ring {
+    transition: fill 250ms ease, stroke 250ms ease;
+  }
+
+  .node-ring-inner {
+    transition: stroke 250ms ease;
+  }
+
+  .node-glow {
+    transition: opacity 300ms ease;
+  }
+
+  .node-icon {
+    transition: stroke 200ms ease, transform 200ms ease;
+  }
+
+  .node-label {
+    transition: fill 200ms ease;
+    pointer-events: none;
+  }
+
+  .orbit-node:hover .orbit-node-scale,
+  .orbit-node:focus-visible .orbit-node-scale {
+    transform: scale(1.04);
+  }
+
+  .orbit-node:focus-visible {
+    outline: none;
+  }
+
+  /* =========================================================================
+     8. RESPONSIVE
+     ========================================================================= */
+  @media (max-width: 960px) {
+    .container {
+      flex-direction: column;
+      text-align: center;
+      gap: 32px;
+    }
+    .text-content { max-width: 100%; }
+    .visual-content { max-width: 550px; }
+  }
+
+  @media (max-width: 600px) {
+    .connectors-section { padding: 60px 16px; min-height: 400px; }
+    .text-content h2 { font-size: 36px; }
+    .visual-content { max-width: 420px; aspect-ratio: 1 / 1; }
+    .grid-svg {
+      mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
+      -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
+    }
+    /* Mobile: hide some stars, reduce density */
+    .star:nth-child(n+7) { display: none; }
+    .orbit-node:nth-child(n+5) { display: none; }
+    .center-glow { r: 50; }
+    .center-ring-outer { r: 38; }
+    .center-ring-middle { r: 28; }
+    .center-ring-inner { r: 18; }
+    .center-core { r: 14; }
+    .center-nucleus { r: 7; }
+    .center-nucleus-inner { r: 3; }
+  }
+
+  @media (max-width: 380px) {
+    .visual-content { max-width: 320px; }
+  }
+
+  /* =========================================================================
+     9. ACCESSIBILITY: REDUCED MOTION
+     ========================================================================= */
+  @media (prefers-reduced-motion: reduce) {
+    .star { display: none !important; }
+    .grid-dot { animation: none !important; opacity: 0.35; }
+    .center-object-breathe,
+    .center-glow,
+    .center-ring-outer,
+    .center-ring-middle,
+    .center-ring-inner,
+    .center-core,
+    .center-nucleus,
+    .center-nucleus-inner,
+    .orbit-node-float { animation: none !important; }
+    .orbit-node-scale,
+    .center-highlight .center-core { transform: none !important; }
+    .center-highlight .center-glow { opacity: 0.35 !important; }
+    .grid-lines { opacity: 1; }
+    .grid-svg { transform: none !important; }
+  }
+</style>

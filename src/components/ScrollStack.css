@@ -3,7 +3,7 @@
   position: relative;
   width: 100%;
   background-color: var(--color-parchment, #FAF8F5);
-  border-top: 1px solid var(--color-parchment-border, rgba(24, 19, 48, 0.08));
+  border-top: none;
 }
 
 /* ── ScrollStack Outer Wrapper: pinned by GSAP ScrollTrigger ── */
@@ -22,21 +22,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 2.5rem;
+  padding-top: 1.25rem;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-/* ── Section Header Container ── */
+/* ── Section Header Container: Permanently visible ── */
 .scroll-stack-header-wrapper {
   width: 100%;
-  max-width: 680px;
+  max-width: 780px;
   text-align: center;
-  z-index: 100;
-  margin-bottom: 1.5rem;
-  padding: 0 1.5rem;
+  z-index: 50;
+  margin-bottom: 0;
+  padding: 0 1.25rem;
   box-sizing: border-box;
-  will-change: transform, opacity;
 }
 
 .section-header-container {
@@ -45,45 +44,47 @@
 
 .section-badge {
   display: inline-block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--color-brand, #CB6CE6);
   letter-spacing: 0.12em;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 9999px;
   background-color: var(--color-white, #FFFFFF);
   border: 1px solid rgba(24, 19, 48, 0.08);
-  margin-bottom: 12px;
+  margin-bottom: 4px;
 }
 
 .section-heading {
-  font-size: 38px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--color-ink, #181330);
-  letter-spacing: -1.4px;
-  margin-bottom: 10px;
+  letter-spacing: -0.8px;
+  margin-bottom: 3px;
   font-family: 'DM Sans', sans-serif;
 }
 
 .section-subheading {
-  font-size: 16px;
+  font-size: 13.5px;
   color: var(--color-dove, #635C75);
-  line-height: 24px;
+  line-height: 19px;
   font-family: 'DM Sans', sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-/* ── Cards Stack Container Stage ── */
+/* ── Cards Stack Container Stage: Positioned with safe clearance below header ── */
 .scroll-stack-cards-container {
   position: relative;
-  width: calc(100% - 3rem);
-  max-width: 1060px;
-  height: 520px;
-  margin: 0 auto;
+  width: 90%;
+  max-width: 1140px;
+  height: 420px;
+  margin: 44px auto 0 auto;
   box-sizing: border-box;
   will-change: transform;
 }
 
-/* ── Individual Card: Strict Unified Bounding Box & Symmetrical Stack Item ── */
+/* ── Individual Card: Standardized height to fit viewport without overflow ── */
 .scroll-stack-card {
   position: absolute;
   top: 0;
@@ -91,16 +92,15 @@
   right: 0;
   margin: 0 auto;
   width: 100%;
-  max-width: 1060px;
-  padding: 2.2rem 2.5rem;
+  height: 420px;
+  padding: 20px 26px 18px 28px;
   border-radius: 24px;
   box-sizing: border-box;
   background-color: #FFFFFF;
-  border: 1px solid rgba(24, 19, 48, 0.09);
-  border-top: 2px solid rgba(203, 108, 230, 0.35); /* Folder tab top accent lip */
+  border: 1px solid rgba(24, 19, 48, 0.06);
   box-shadow: 
-    0 -3px 12px rgba(18, 12, 31, 0.03), 
-    0 16px 48px rgba(18, 12, 31, 0.08);
+    0 4px 20px rgba(18, 12, 31, 0.05),
+    0 1px 3px rgba(18, 12, 31, 0.03);
 
   /* Lock transform origin strictly to horizontal center (50% 0%) */
   transform-origin: 50% 0%;
@@ -118,26 +118,38 @@
 
 .scroll-stack-card:hover {
   box-shadow: 
-    0 -4px 16px rgba(18, 12, 31, 0.04), 
-    0 24px 64px rgba(18, 12, 31, 0.12);
+    0 8px 30px rgba(18, 12, 31, 0.08), 
+    0 2px 8px rgba(18, 12, 31, 0.04);
 }
 
-/* ── Card Content Layout (2-column) with Flex/Grid Blowout Fixes ── */
+/* ── Card Content Layout (2-column: Left features & info, Right soft-tinted canvas) ── */
 .stack-card-content {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 36px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  gap: 24px;
+  align-items: stretch;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
 }
 
-.stack-card-left, 
+.stack-card-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-right: 6px;
+}
+
 .stack-card-right {
   display: flex;
   flex-direction: column;
   min-width: 0;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
 }
 
@@ -145,58 +157,99 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 2px;
 }
 
-.stack-card-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
+.stack-card-icon-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #F1F3F0;
+  color: #181330;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border: 1px solid rgba(24, 19, 48, 0.06);
 }
 
 .stack-card-tag {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .stack-card-title {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 700;
   color: #181330;
-  letter-spacing: -0.8px;
-  margin-bottom: 10px;
-  line-height: 1.2;
+  letter-spacing: -0.5px;
+  margin: 3px 0 3px 0;
+  line-height: 1.22;
   font-family: 'DM Sans', sans-serif;
 }
 
 .stack-card-desc {
-  font-size: 15px;
+  font-size: 12.5px;
   color: #635C75;
-  line-height: 23px;
-  margin-bottom: 20px;
+  line-height: 17.5px;
+  margin-bottom: 8px;
   font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Checklist matching screenshot style (round check + label) ── */
+.stack-card-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #181330;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.checklist-check {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1.5px solid #C8CAC7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: #FFFFFF;
+  color: #181330;
+}
+
+.checklist-check svg {
+  width: 8.5px;
+  height: 8.5px;
 }
 
 .stack-card-metrics {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+  margin-top: auto;
 }
 
 .metric-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background-color: var(--color-parchment, #FAF8F5);
   border: 1px solid rgba(24, 19, 48, 0.08);
-  padding: 5px 12px;
+  padding: 2.5px 8px;
   border-radius: 9999px;
-  font-size: 12.5px;
+  font-size: 10.5px;
 }
 
 .metric-label {
@@ -209,104 +262,361 @@
   font-weight: 700;
 }
 
-/* ── Card Right UI Preview Container ── */
+/* ── Card Right Canvas: Soft sage/sand background with rich UI mockups ── */
 .card-ui-preview {
-  background-color: #FAFAFD;
-  border: 1px solid rgba(24, 19, 48, 0.08);
+  background-color: #ECEFEA;
+  border: 1px solid rgba(24, 19, 48, 0.04);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(18, 12, 31, 0.04);
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px;
+}
+
+/* Preview decorative accent curve */
+.preview-bg-accent {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  width: 120px;
+  height: 40px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Preview Grid / Floating Card Mockups */
+.preview-mockup-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* White inner mockup card */
+.preview-white-card {
+  background-color: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(18, 12, 31, 0.05);
+  border: 1px solid rgba(24, 19, 48, 0.05);
+  overflow: hidden;
   width: 100%;
   box-sizing: border-box;
 }
 
-.ui-header-bar {
+.preview-card-header {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid rgba(24, 19, 48, 0.06);
-  min-width: 0;
-  overflow: hidden;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(24, 19, 48, 0.05);
+  background-color: #FAFAFC;
 }
 
-.ui-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.preview-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.ui-dot.red { background-color: #FF5F56; }
-.ui-dot.yellow { background-color: #FFBD2E; }
-.ui-dot.green { background-color: #27C93F; }
 
-.ui-title {
+.preview-card-title {
   font-size: 11.5px;
-  font-weight: 600;
-  color: #635C75;
-  margin-left: 6px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
-  flex: 1;
-}
-
-.ui-body-preview {
-  padding: 20px;
-}
-
-.ui-stat-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.stat-box {
-  background-color: #FFFFFF;
-  border: 1px solid rgba(24, 19, 48, 0.06);
-  padding: 14px;
-  border-radius: 12px;
-}
-
-.stat-box.accent {
-  background-color: #FDF5FF;
-  border-color: rgba(203, 108, 230, 0.2);
-}
-
-.stat-title {
-  font-size: 11px;
-  color: #635C75;
-  margin-bottom: 4px;
-}
-
-.stat-number {
-  font-size: 16px;
   font-weight: 700;
   color: #181330;
 }
 
-.ui-graph-line {
-  height: 42px;
-  background: linear-gradient(135deg, rgba(203, 108, 230, 0.15) 0%, rgba(154, 77, 193, 0.05) 100%);
-  border-radius: 8px;
-  border: 1px solid rgba(203, 108, 230, 0.2);
+.preview-card-count {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  background-color: #ECEEEA;
+  color: #635C75;
+}
+
+.preview-btn-pill {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2.5px 7px;
+  border-radius: 6px;
+  border: 1px solid rgba(24, 19, 48, 0.1);
+  background-color: #FFFFFF;
+  color: #181330;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Filter pills row inside preview card */
+.preview-filter-row {
+  display: flex;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid rgba(24, 19, 48, 0.04);
+}
+
+.preview-filter-badge {
+  font-size: 10px;
+  font-weight: 500;
+  color: #635C75;
+  border: 1px solid rgba(24, 19, 48, 0.06);
+  border-radius: 6px;
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Data table inside mockup */
+.preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5px;
+}
+
+.preview-table th {
+  text-align: left;
+  padding: 5px 12px;
+  color: #8C869E;
+  font-weight: 500;
+  font-size: 9.5px;
+  border-bottom: 1px solid rgba(24, 19, 48, 0.04);
+}
+
+.preview-table td {
+  padding: 5px 12px;
+  color: #181330;
+  border-bottom: 1px solid rgba(24, 19, 48, 0.03);
+}
+
+.preview-table tr.highlight-row {
+  background-color: #E3F2E8;
+  font-weight: 600;
+}
+
+/* Provider / Device dual-column card mockup (Screenshot 1 style) */
+.preview-columns-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.preview-mini-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 3px 12px rgba(18, 12, 31, 0.04);
+  border: 1px solid rgba(24, 19, 48, 0.05);
+}
+
+.preview-mini-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.preview-mini-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #181330;
+}
+
+.preview-mini-sub {
+  font-size: 9.5px;
+  color: #8C869E;
+  margin-bottom: 6px;
+}
+
+.preview-node-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 7px;
+  background-color: #F8F9FA;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+.preview-node-item.dashed-placeholder {
+  background-color: transparent;
+  border: 1.5px dashed #D2D4CF;
+  height: 28px;
+}
+
+.node-avatar-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #E2E4E0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #181330;
+  flex-shrink: 0;
+}
+
+.node-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.node-name {
+  font-weight: 600;
+  color: #181330;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-status-text {
+  font-size: 8.5px;
+  color: #635C75;
+}
+
+/* Floating interactive card (Clean, no cursor hand) */
+.preview-floating-widget {
+  position: absolute;
+  bottom: 4px;
+  right: 12px;
+  background-color: #FFFFFF;
+  border: 1px dashed rgba(24, 19, 48, 0.2);
+  border-radius: 10px;
+  padding: 7px 11px;
+  box-shadow: 0 6px 20px rgba(18, 12, 31, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+}
+
+.preview-floating-drawer {
+  position: absolute;
+  bottom: -2px;
+  left: 10px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 8px 12px;
+  box-shadow: 0 8px 24px rgba(18, 12, 31, 0.1);
+  border: 1px solid rgba(24, 19, 48, 0.06);
+  z-index: 6;
+  min-width: 120px;
+}
+
+.drawer-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #181330;
+  margin-bottom: 5px;
+}
+
+.drawer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #181330;
+  padding: 2px 0;
+}
+
+.drawer-checkbox {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  border: 1px solid #D0D2CF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer-checkbox.checked {
+  background-color: #37A87A;
+  border-color: #37A87A;
+  color: #FFFFFF;
+}
+
+@media (max-width: 1024px) {
+  .scroll-stack-cards-container {
+    width: calc(100% - 2rem);
+    height: 420px;
+    margin-top: 36px;
+  }
+  .scroll-stack-card {
+    height: 420px;
+    padding: 18px 20px;
+  }
+}
+
+@media (max-height: 850px) {
+  .scroll-stack-viewport {
+    padding-top: 0.85rem;
+  }
+  .section-badge {
+    margin-bottom: 2px;
+    padding: 2px 8px;
+    font-size: 10px;
+  }
+  .section-heading {
+    font-size: 22px;
+    margin-bottom: 2px;
+  }
+  .section-subheading {
+    font-size: 12px;
+    line-height: 16px;
+    max-width: 500px;
+  }
+  .scroll-stack-cards-container {
+    margin-top: 32px;
+    height: 390px;
+  }
+  .scroll-stack-card {
+    height: 390px;
+  }
+  .stack-card-desc {
+    margin-bottom: 5px;
+  }
+  .stack-card-checklist {
+    gap: 3px;
+    margin-bottom: 5px;
+  }
 }
 
 @media (max-width: 900px) {
+  .scroll-stack-viewport {
+    height: auto;
+    min-height: 100vh;
+    padding-top: 2rem;
+  }
   .stack-card-content {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 20px;
+    height: auto;
   }
   .scroll-stack-card {
-    padding: 1.6rem;
-  }
-  .section-heading {
-    font-size: 30px;
+    position: relative;
+    height: auto;
+    min-height: 420px;
+    padding: 24px;
+    margin-bottom: 24px;
   }
   .scroll-stack-cards-container {
-    height: 560px;
+    height: auto;
+    margin-top: 24px;
+  }
+  .card-ui-preview {
+    min-height: 280px;
   }
 }

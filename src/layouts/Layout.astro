@@ -1,12 +1,13 @@
 ---
+import "../styles/tailwind-bridge.css";
 interface Props {
 	title?: string;
 	description?: string;
 }
 
-const { 
+const {
 	title = "EmbryoOne — Connect Intelligence to the Real World",
-	description = "Bring AI, hardware, IoT and software together in one intelligent platform built for the real world."
+	description = "Bring AI, hardware, IoT and software together in one intelligent platform built for the real world.",
 } = Astro.props;
 ---
 
@@ -18,7 +19,7 @@ const {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		
+
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
@@ -26,11 +27,14 @@ const {
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
-		
+
 		<!-- DM Sans Google Font (400, 500, 600, 700) -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
 		<slot />
@@ -40,45 +44,46 @@ const {
 <style is:global>
 	:root {
 		/* Typography */
-		--font-primary: 'DM Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+		--font-primary:
+			"DM Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
 
 		/* Ambient Aurora Mesh Glow Palette Tokens (EmbryoOne Style Guide) */
-		--glow-color-1: #CB6CE6; /* Primary Embryo Purple */
-		--glow-color-2: #5B3AC4; /* Secondary Iris Accent */
-		--glow-color-3: #C453E4; /* Vivid Orchid Shade */
-		--glow-color-4: #F3E0FB; /* Soft Lavender Blush */
-		--glow-color-5: #3B2166; /* Twilight Ink */
-		--glow-base: #FFFFFF;
+		--glow-color-1: #cb6ce6; /* Primary Embryo Purple */
+		--glow-color-2: #5b3ac4; /* Secondary Iris Accent */
+		--glow-color-3: #c453e4; /* Vivid Orchid Shade */
+		--glow-color-4: #f3e0fb; /* Soft Lavender Blush */
+		--glow-color-5: #3b2166; /* Twilight Ink */
+		--glow-base: #ffffff;
 
 		/* Brand — sourced from EmbryoOne logo */
-		--color-brand: #CB6CE6; /* Embryo Purple — primary */
-		--color-brand-hover: #AD52D0; /* Lavender Purple */
-		--color-brand-active: #A35AC8; /* Lavender Purple 2 */
-		--color-amethyst: #9A4DC1; /* logo wordmark / links */
-		--color-orchid: #C759E1; /* Vivid Orchid — secondary */
-		--color-violet: #DB97F5; /* soft highlight / chips */
+		--color-brand: #cb6ce6; /* Embryo Purple — primary */
+		--color-brand-hover: #ad52d0; /* Lavender Purple */
+		--color-brand-active: #a35ac8; /* Lavender Purple 2 */
+		--color-amethyst: #9a4dc1; /* logo wordmark / links */
+		--color-orchid: #c759e1; /* Vivid Orchid — secondary */
+		--color-violet: #db97f5; /* soft highlight / chips */
 
 		/* Ink & accent */
 		--color-ink: #181330;
-		--color-ink-deep: #120C1F;
-		--color-twilight: #3B2166;
-		--color-iris: #5B3AC4; /* blue replacement */
+		--color-ink-deep: #120c1f;
+		--color-twilight: #3b2166;
+		--color-iris: #5b3ac4; /* blue replacement */
 
 		/* Neutral — Lovable-inspired warm surfaces */
-		--color-white: #FFFFFF;
-		--color-parchment: #F7F4ED;
-		--color-linen: #FAF8F5; /* Warm off-white for editorial sections */
-		--color-parchment-border: #ECEAE4;
-		--color-lavender: #F3E6FB;
-		--color-mist: #E4DFEA;
-		--color-dove: #5C5566;
+		--color-white: #ffffff;
+		--color-parchment: #f7f4ed;
+		--color-linen: #faf8f5; /* Warm off-white for editorial sections */
+		--color-parchment-border: #eceae4;
+		--color-lavender: #f3e6fb;
+		--color-mist: #e4dfea;
+		--color-dove: #5c5566;
 		--color-steel: #888494;
 
 		/* Functional — ZERO BLUE RULE */
-		--color-danger: #E54840;
-		--color-success: #2F9E68;
-		--color-warning: #E2A63D;
-		--color-info: #5B3AC4; /* = Iris, never blue */
+		--color-danger: #e54840;
+		--color-success: #2f9e68;
+		--color-warning: #e2a63d;
+		--color-info: #5b3ac4; /* = Iris, never blue */
 
 		/* Radius */
 		--radius-sm: 8px;
@@ -95,8 +100,13 @@ const {
 		--shadow-glow: 0 0 24px rgba(203, 108, 230, 0.18);
 	}
 
-	*, *::before, *::after {
+	*,
+	*::before,
+	*::after {
 		box-sizing: border-box;
+	}
+
+	:where(body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd) {
 		margin: 0;
 		padding: 0;
 	}
@@ -123,31 +133,34 @@ const {
 		flex-direction: column;
 	}
 
-	/* Focus state styling conforming to zero blue rule */
-	:focus-visible {
+	/* Focus state styling conforming to zero blue rule (zero specificity) */
+	:where(:focus-visible) {
 		outline: 2px solid var(--color-brand);
 		outline-offset: 2px;
 	}
 
-	/* Typography utility defaults */
-	h1, h2, h3, h4, h5, h6 {
-		color: var(--color-ink);
+	/* Typography defaults isolated via zero specificity */
+	:where(h1, h2, h3, h4, h5, h6) {
+		color: inherit;
+		font-family: var(--font-primary);
 		font-weight: 700;
-		line-height: 1.1;
+		line-height: 1.15;
 		letter-spacing: -0.02em;
 	}
 
-	a {
+	:where(a) {
 		color: inherit;
 		text-decoration: none;
 	}
 
-	button, input, select, textarea {
+	:where(button, input, select, textarea) {
 		font-family: inherit;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		*, *::before, *::after {
+		*,
+		*::before,
+		*::after {
 			animation-duration: 0.01ms !important;
 			animation-iteration-count: 1 !important;
 			transition-duration: 0.01ms !important;

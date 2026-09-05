@@ -20,8 +20,8 @@ const ScrollStack = ({
   children,
   header,
   className = '',
-  scrubDamping = 1.2,
-  topOffsetStep = 14,
+  scrubDamping = 1.5,
+  topOffsetStep = 10,
   exitScale = 0.98,
   onStackComplete,
 }) => {
@@ -41,10 +41,10 @@ const ScrollStack = ({
     const n = cards.length;
     if (n === 0) return;
 
-    // Reset GPU acceleration & initial card layout with locked 50% 0% transform origin
+    // Reset GPU acceleration & initial card layout with identical scale 1 and dimensions
     cards.forEach((card, i) => {
       gsap.set(card, {
-        willChange: 'transform',
+        willChange: 'transform, opacity',
         backfaceVisibility: 'hidden',
         transformStyle: 'preserve-3d',
         transformOrigin: '50% 0%',
@@ -57,7 +57,7 @@ const ScrollStack = ({
         x: 0,
         xPercent: 0,
         y: i === 0 ? 0 : '100vh',
-        scale: 1,
+        scale: 1, // All cards strictly locked to scale 1 (same size as first card)
         opacity: 1,
       });
     });
@@ -67,39 +67,58 @@ const ScrollStack = ({
 
     const tl = gsap.timeline();
 
-    // 1. Sequential Card Entry & Uniform Folder-Tab Docking Phase
+    // 1. Initial settle hold for first card
+    tl.to({}, { duration: 0.4 });
+
+    // 2. Sequential Card Entry & Folder-Tab Docking Phase (All cards exact same size)
     cards.forEach((card, i) => {
       if (i > 0) {
         const enterLabel = `card-${i}-enter`;
         tl.addLabel(enterLabel);
 
-        // Incoming card translates smoothly into its docked topOffset position
+        // Incoming card docks directly at y: 0 with scale: 1 (exact same size and bounds as first card)
         tl.to(
           card,
           {
-            y: i * topOffsetStep,
+            y: 0,
             scale: 1,
-            duration: 1,
+            opacity: 1,
+            duration: 1.6,
             ease: 'power1.out',
           },
           enterLabel
         );
 
-        // Subtle hold delay between card entries for smooth scrubbing feel
-        tl.to({}, { duration: 0.25 });
+        // Previous cards slide slightly upward by topOffsetStep to reveal the folder tab stack behind
+        // maintaining scale: 1 so every card remains the exact same size
+        for (let j = 0; j < i; j++) {
+          tl.to(
+            cards[j],
+            {
+              y: -(i - j) * topOffsetStep,
+              scale: 1,
+              duration: 1.6,
+              ease: 'power1.out',
+            },
+            enterLabel
+          );
+        }
+
+        // Deliberate hold delay between card entries so each card is clearly readable
+        tl.to({}, { duration: 0.8 });
       }
     });
 
-    // 2. Stack Completed Hold & Natural Unpin Phase
+    // 3. Stack Completed Hold & Natural Unpin Phase
     tl.addLabel('stack-complete');
-    tl.to({}, { duration: 0.3 }, 'stack-complete');
+    tl.to({}, { duration: 0.8 }, 'stack-complete');
 
-    // 3. Create GSAP ScrollTrigger pinning wrapper over exact docking scrub track
+    // 4. Create GSAP ScrollTrigger pinning wrapper over extended ~485vh scrub track
     const trigger = ScrollTrigger.create({
       trigger: wrapper,
       pin: true,
       start: 'top top',
-      end: `+=${(n - 1) * 35 + 20}vh`,
+      end: `+=${(n - 1) * 85 + 60}vh`,
       scrub: scrubDamping,
       anticipatePin: 1,
       invalidateOnRefresh: true,

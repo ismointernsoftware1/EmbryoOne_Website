@@ -1,0 +1,377 @@
+---
+// src/components/FAQ.astro
+
+import ScrollReveal from './ScrollReveal.jsx';
+
+const faqs = [
+  {
+    question: "Where is laboratory data stored?",
+    answer: "All data is securely encrypted and stored in HIPAA and GDPR-compliant cloud environments. We never store raw or sensitive patient data on local desktop devices or unencrypted networks."
+  },
+  {
+    question: "Is patient data used to train AI models?",
+    answer: "Absolutely not. EmbryoOne's proprietary algorithms are trained exclusively on heavily anonymized, aggregated datasets. Your clinic's specific patient data is logically isolated and never used for external AI training."
+  },
+  {
+    question: "How is data isolated between different clinics?",
+    answer: "EmbryoOne utilizes a strictly multi-tenant architecture with logical database isolation. Every clinic operates in its own secure perimeter with role-based access controls (RBAC) ensuring data never crosses boundaries."
+  },
+  {
+    question: "Which hardware devices does EmbryoOne integrate with?",
+    answer: "Our platform connects via IoT and secure API directly to modern incubators, cryo-storage monitors, and digital microscopes. If a device has an output protocol, EmbryoOne can securely ingest and monitor its data."
+  },
+  {
+    question: "Does EmbryoOne require access to our internal clinic networks?",
+    answer: "No. Our edge-connector technology pushes outgoing data via secure TLS 1.3 to our cloud. We do not require inbound firewall ports to be opened or direct access to your internal clinical networks."
+  },
+  {
+    question: "How are compliance and audit logs handled?",
+    answer: "Every action within the EmbryoOne platform—from inventory adjustments to user logins—is permanently recorded in a tamper-evident audit log that administrators can export for compliance reporting at any time."
+  }
+];
+---
+
+<section class="eo-faq-section" id="faq">
+  <div class="eo-faq-container">
+    <ScrollReveal
+      client:visible
+      text="Frequently Asked Question"
+      baseOpacity={0.1}
+      enableBlur={true}
+      baseRotation={3}
+      blurStrength={4}
+      containerClassName="eo-faq-title-reveal"
+      textClassName="eo-faq-title"
+    >
+      Frequently Asked Question
+    </ScrollReveal>
+    <p class="eo-faq-subtitle" data-reveal>Everything you need to know about how EmbryoOne handles your data, security, and integrations.</p>
+    
+    <div class="eo-faq-list">
+      {faqs.map((faq, index) => (
+        <div class="eo-faq-item" data-reveal data-stagger={index}>
+          <button class="eo-faq-question" type="button" aria-expanded="false">
+            <span class="eo-faq-question-text">{faq.question}</span>
+            <span class="eo-faq-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </span>
+          </button>
+          
+          <div class="eo-faq-answer">
+            <div class="eo-faq-answer-inner">
+              <p>{faq.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* Using is:global to escape any Tailwind preflight or scoping conflicts */
+  
+  .eo-faq-section {
+    background-color: #FCFBF8 !important;
+    padding: 120px 24px !important;
+    font-family: "DM Sans", sans-serif !important;
+    color: #17131A !important;
+    overflow: hidden;
+  }
+
+  .eo-faq-container {
+    max-width: 780px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+  .eo-faq-title-reveal {
+    margin: 0 0 16px 0 !important;
+    text-align: center !important;
+    font-family: "DM Sans", sans-serif !important;
+  }
+
+  .eo-faq-title {
+    font-size: 56px !important;
+    font-weight: 600 !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    letter-spacing: -0.02em !important;
+    color: #17131A !important;
+    font-family: "DM Sans", sans-serif !important;
+  }
+
+  .eo-faq-title .word,
+  .eo-faq-title span {
+    font-family: "DM Sans", sans-serif !important;
+  }
+
+  .eo-faq-subtitle {
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    color: #616161 !important;
+    margin: 0 0 64px 0 !important;
+    font-family: "DM Sans", sans-serif !important;
+  }
+
+  .eo-faq-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* FAQ Item Card - pill style like Lovable reference */
+  .eo-faq-item {
+    background: #FFFFFF !important;
+    border: 1px solid #E7E2E9 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
+  }
+
+  .eo-faq-item:hover {
+    border-color: #D7D0DA !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .eo-faq-item.is-active {
+    border-color: #BF73E1 !important;
+    box-shadow: 0 8px 24px rgba(158, 80, 198, 0.08) !important;
+  }
+
+  /* Question Button */
+  .eo-faq-question {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 22px 28px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    color: #17131A !important;
+    font-family: "DM Sans", sans-serif !important;
+    outline: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+  }
+
+  .eo-faq-question:focus-visible {
+    outline: 2px solid #9E50C6 !important;
+    outline-offset: -2px !important;
+    border-radius: 16px !important;
+  }
+
+  .eo-faq-question-text {
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    padding-right: 20px !important;
+    color: #17131A !important;
+    transition: color 0.2s ease !important;
+  }
+
+  .eo-faq-question:hover .eo-faq-question-text {
+    color: #73349A !important;
+  }
+
+  .eo-faq-item.is-active .eo-faq-question-text {
+    color: #73349A !important;
+  }
+
+  /* Chevron icon */
+  .eo-faq-icon {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    color: #8A858C !important;
+    border-radius: 8px !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease, background 0.2s ease !important;
+  }
+
+  .eo-faq-question:hover .eo-faq-icon {
+    color: #73349A !important;
+    background: #FAF5FC !important;
+  }
+
+  .eo-faq-item.is-active .eo-faq-icon {
+    transform: rotate(180deg) !important;
+    color: #9E50C6 !important;
+    background: #F4E7FA !important;
+  }
+
+  /* Accordion Body - CSS Grid trick for smooth height animation */
+  .eo-faq-answer {
+    display: grid !important;
+    grid-template-rows: 0fr !important;
+    transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .eo-faq-item.is-active .eo-faq-answer {
+    grid-template-rows: 1fr !important;
+  }
+
+  .eo-faq-answer-inner {
+    overflow: hidden !important;
+    min-height: 0 !important;
+  }
+
+  .eo-faq-answer-inner p {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+    color: #616161 !important;
+    padding: 0 28px 24px 28px !important;
+    margin: 0 !important;
+    font-family: "DM Sans", sans-serif !important;
+    font-weight: 400 !important;
+    transform: translateY(-8px) !important;
+    opacity: 0 !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
+  }
+
+  .eo-faq-item.is-active .eo-faq-answer-inner p {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+    transition-delay: 0.15s !important;
+  }
+
+  /* --- SCROLL REVEAL --- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Staggered delays */
+  [data-stagger="0"] { transition-delay: 0.1s; }
+  [data-stagger="1"] { transition-delay: 0.2s; }
+  [data-stagger="2"] { transition-delay: 0.3s; }
+  [data-stagger="3"] { transition-delay: 0.4s; }
+  [data-stagger="4"] { transition-delay: 0.5s; }
+  [data-stagger="5"] { transition-delay: 0.6s; }
+  [data-stagger="6"] { transition-delay: 0.7s; }
+  [data-stagger="7"] { transition-delay: 0.8s; }
+
+  /* --- Responsive --- */
+  @media (max-width: 768px) {
+    .eo-faq-section {
+      padding: 80px 20px !important;
+    }
+    .eo-faq-title {
+      font-size: 36px !important;
+    }
+    .eo-faq-subtitle {
+      font-size: 16px !important;
+      margin-bottom: 40px !important;
+    }
+    .eo-faq-question {
+      padding: 20px 20px !important;
+    }
+    .eo-faq-question-text {
+      font-size: 15px !important;
+      padding-right: 12px !important;
+    }
+    .eo-faq-answer-inner p {
+      padding: 0 20px 20px 20px !important;
+      font-size: 14px !important;
+    }
+  }
+
+  /* --- Reduced Motion --- */
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .eo-faq-answer,
+    .eo-faq-answer-inner p,
+    .eo-faq-icon {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Run script when DOM is ready OR immediately if already loaded
+  const initFAQ = () => {
+    // --- 1. ACCORDION LOGIC ---
+    const faqItems = document.querySelectorAll('.eo-faq-item');
+    
+    faqItems.forEach(item => {
+      const button = item.querySelector('.eo-faq-question');
+      if (!button) return;
+      
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isActive = item.classList.contains('is-active');
+        
+        // Close all other items (exclusive accordion behavior)
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('is-active');
+            const otherBtn = otherItem.querySelector('.eo-faq-question');
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle current
+        if (isActive) {
+          item.classList.remove('is-active');
+          button.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('is-active');
+          button.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // --- 2. SCROLL REVEAL ---
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        rootMargin: '0px 0px -80px 0px',
+        threshold: 0.1
+      });
+
+      document.querySelectorAll('[data-reveal]').forEach(el => {
+        observer.observe(el);
+      });
+    } else {
+      // Fallback: just show everything
+      document.querySelectorAll('[data-reveal]').forEach(el => {
+        el.classList.add('is-visible');
+      });
+    }
+  };
+
+  // Handle both immediate and deferred execution
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFAQ);
+  } else {
+    initFAQ();
+  }
+</script>
