@@ -115,8 +115,24 @@
 @media (max-width: 900px) {
   .bento-grid-wrapper {
     grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 20px;
   }
   .bento-card-wide {
     flex-direction: column;
+    min-height: auto;
+  }
+  .bento-card-half {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .bento-grid-wrapper {
+    padding: 0 12px;
+    gap: 16px;
+  }
+  .magic-bento-card {
+    border-radius: 20px;
   }
 }

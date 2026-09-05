@@ -427,18 +427,64 @@ import ScrollReveal from './ScrollReveal.jsx';
   }
 
   @media (max-width: 1023px) {
+    .enterprise-showcase {
+      margin: 48px auto;
+      width: calc(100% - 32px);
+      border-radius: 20px;
+    }
     .showcase-container {
-      padding: 40px 24px;
+      padding: 48px 24px;
+      gap: 40px;
     }
     .showcase-visual {
       align-items: center;
       width: 100%;
+      min-height: auto;
     }
     .center-node {
       margin-right: 0;
     }
     .connector-hub {
       align-self: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .enterprise-showcase {
+      margin: 32px auto;
+      width: calc(100% - 20px);
+      border-radius: 16px;
+    }
+    .showcase-container {
+      padding: 32px 16px;
+      gap: 32px;
+    }
+    .showcase-logo-img {
+      height: 36px;
+    }
+    .body-text {
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+    .action-buttons {
+      flex-direction: column;
+      width: 100%;
+      gap: 12px;
+    }
+    .btn-primary, .btn-secondary {
+      width: 100%;
+    }
+    .template-library, .connector-hub {
+      max-width: 100%;
+      padding: 16px;
+    }
+    .connector-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .center-node {
+      padding: 12px 20px;
+      gap: 16px;
     }
   }
 </style>
