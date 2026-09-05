@@ -11,13 +11,13 @@ export const ScrollStackItem = ({ children, itemClassName = '' }) => (
 
 /**
  * ScrollStack — High-Performance Folder-Tab Card Stack Scroll Animation.
- * Fully responsive and optimized for mobile, tablet, and desktop screens.
+ * Paced and optimized for smooth, readable scrolling on mobile, tablet, and desktop.
  */
 const ScrollStack = ({
   children,
   header,
   className = '',
-  scrubDamping = 1.2,
+  scrubDamping = 1.5,
   topOffsetStep = 6,
   onStackComplete,
 }) => {
@@ -41,7 +41,6 @@ const ScrollStack = ({
 
     // Desktop & Tablet Landscape (min-width: 901px)
     mm.add('(min-width: 901px)', () => {
-      // Reset card layout
       cards.forEach((card, i) => {
         gsap.set(card, {
           willChange: 'transform, opacity',
@@ -66,58 +65,51 @@ const ScrollStack = ({
       if (headerEl) gsap.set(headerEl, { y: 0, opacity: 1 });
 
       const tl = gsap.timeline();
+      tl.to({}, { duration: 0.5 });
 
-      // 1. Initial settle hold for first card
-      tl.to({}, { duration: 0.4 });
-
-      // 2. Sequential Card Entry & Folder-Tab Docking Phase
       cards.forEach((card, i) => {
         if (i > 0) {
           const enterLabel = `card-${i}-enter`;
           tl.addLabel(enterLabel);
 
-          // Incoming card docks directly at y: 0 with scale: 1
           tl.to(
             card,
             {
               y: 0,
               scale: 1,
               opacity: 1,
-              duration: 1.4,
+              duration: 1.8,
               ease: 'power1.out',
             },
             enterLabel
           );
 
-          // Previous cards slide slightly upward by topOffsetStep
           for (let j = 0; j < i; j++) {
             tl.to(
               cards[j],
               {
                 y: -(i - j) * topOffsetStep,
                 scale: 1,
-                duration: 1.4,
+                duration: 1.8,
                 ease: 'power1.out',
               },
               enterLabel
             );
           }
 
-          // Deliberate hold delay between card entries so each card is clearly readable
-          tl.to({}, { duration: 0.6 });
+          // Generous hold delay so each card is clearly readable
+          tl.to({}, { duration: 1.0 });
         }
       });
 
-      // 3. Stack Completed Hold
       tl.addLabel('stack-complete');
-      tl.to({}, { duration: 0.6 }, 'stack-complete');
+      tl.to({}, { duration: 0.8 }, 'stack-complete');
 
-      // 4. Create GSAP ScrollTrigger pinning wrapper
       ScrollTrigger.create({
         trigger: wrapper,
         pin: true,
         start: 'top top',
-        end: `+=${(n - 1) * 75 + 50}vh`,
+        end: `+=${(n - 1) * 95 + 60}vh`,
         scrub: scrubDamping,
         anticipatePin: 1,
         invalidateOnRefresh: true,
@@ -130,7 +122,7 @@ const ScrollStack = ({
       });
     });
 
-    // Mobile & Tablet Portrait (max-width: 900px)
+    // Mobile & Tablet Portrait (max-width: 900px) — Significantly expanded scroll distance and readable holds
     mm.add('(max-width: 900px)', () => {
       const mobileOffsetStep = 4;
 
@@ -158,20 +150,21 @@ const ScrollStack = ({
       if (headerEl) gsap.set(headerEl, { y: 0, opacity: 1 });
 
       const tl = gsap.timeline();
-      tl.to({}, { duration: 0.3 });
+      tl.to({}, { duration: 0.5 });
 
       cards.forEach((card, i) => {
         if (i > 0) {
           const enterLabel = `mobile-card-${i}-enter`;
           tl.addLabel(enterLabel);
 
+          // Slower, smoother card transition
           tl.to(
             card,
             {
               y: 0,
               scale: 1,
               opacity: 1,
-              duration: 1.2,
+              duration: 2.0,
               ease: 'power1.out',
             },
             enterLabel
@@ -183,26 +176,28 @@ const ScrollStack = ({
               {
                 y: -(i - j) * mobileOffsetStep,
                 scale: 1,
-                duration: 1.2,
+                duration: 2.0,
                 ease: 'power1.out',
               },
               enterLabel
             );
           }
 
-          tl.to({}, { duration: 0.5 });
+          // Extended hold duration so each card remains on screen while scrolling
+          tl.to({}, { duration: 1.4 });
         }
       });
 
       tl.addLabel('mobile-stack-complete');
-      tl.to({}, { duration: 0.5 }, 'mobile-stack-complete');
+      tl.to({}, { duration: 1.0 }, 'mobile-stack-complete');
 
+      // Extended scroll scrub track (~120vh per card transition) for deliberate, controlled mobile scrolling
       ScrollTrigger.create({
         trigger: wrapper,
         pin: true,
         start: 'top top',
-        end: `+=${(n - 1) * 65 + 40}vh`,
-        scrub: 1.0,
+        end: `+=${(n - 1) * 120 + 80}vh`,
+        scrub: 1.6,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         animation: tl,
